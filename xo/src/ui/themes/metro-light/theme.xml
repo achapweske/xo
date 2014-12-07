@@ -1,0 +1,17 @@
+<Dictionary>
+	<Style x:source="./Button.xml" />
+	<Style x:source="./CheckBox.xml" />
+	<Style x:source="./ItemsControl.xml" />
+	<Style x:source="./GridSplitter.xml" />
+	<Style x:source="./Label.xml" />
+	<Style x:source="./ListBox.xml" />
+	<Style x:source="./ListBoxItem.xml" />
+	<Style x:source="./RadioButton.xml" />
+	<Style x:source="./RepeatButton.xml" />
+	<Style x:source="./ScrollBar.xml" />
+	<Style x:source="./TabControl.xml" />
+	<Style x:source="./TabItem.xml" />
+	<Style x:source="./TextBlock.xml" />
+	<Style x:source="./TextBox.xml" />
+	<Style x:source="./ToggleButton.xml" />
+</Dictionary>

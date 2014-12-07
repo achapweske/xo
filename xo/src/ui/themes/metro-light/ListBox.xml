@@ -1,0 +1,19 @@
+<Style x:ref="ListBox">
+	<Dictionary.definitions>
+		<Dictionary x:source="./definitions.xml" />
+	</Dictionary.definitions>
+	<Property name="foreground" value="@foregroundColor" />
+	<Property name="background" value="@listBoxBackgroundColor" />
+	<Property name="borderWidth" value="1" />
+	<Property name="borderColor" value="@listBoxBorderColor" />
+	<Property name="padding" value="0" />
+	<Property name="template">
+		<Template>
+			<ContentPresenter background="{control.background}" borderColor="{control.borderColor}" borderWidth="{control.borderWidth}" width="100%" height="100%">
+				<ScrollViewer padding="{control.padding}" width="100%">
+					<VerticalPanel x:name="itemsPanel" width="100%" />
+				</ScrollViewer>		
+			</ContentPresenter>
+		</Template>
+	</Property>
+</Style>

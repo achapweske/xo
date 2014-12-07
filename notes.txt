@@ -1,0 +1,11 @@
+Issues:
+1 height=100% doesn't work when parent's height is auto and min-width is > auto height
+
+Cross-browser issues:
+-IE8 doesn't support rgba()
+-addEventListener() vs attachEvent()
+-console.log not always defined
+-XML: localName vs baseName
+-IE: errors not propagating through try/finally blocks
+-Handling svg on browsers where svg not supported
+-IE7 doesn't support 'inherit' value for css properties

@@ -1,0 +1,7 @@
+<Style x:ref="ItemsControl">
+	<Property name="template">
+		<Template>
+			<VerticalPanel x:name="itemsPanel" />
+		</Template>
+	</Property>
+</Style>

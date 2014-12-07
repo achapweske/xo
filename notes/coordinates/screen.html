@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Screen Properties</title>
+	<style>
+		table {
+			border-collapse: collapse;
+		}
+		table th,
+		table td {
+			text-align:left;
+			padding:5px 10px;
+			border-bottom:1px solid lightgray;
+		}
+	</style>
+</head>
+<body>
+	<h3>screen</h3>
+	<table id="properties">
+		<thead>
+			<tr>
+				<th>Property</th>
+				<th>Value</th>
+				<th>Description</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr>
+				<td>availHeight</td>
+				<td></td>
+				<td>
+					Available screen height (logical units)<br>
+					= screen height - top taskbar height - bottom taskbar height<br>
+					IE8, FF32: ok *unable to test with taskbar
+				</td>
+			</tr>
+			<tr>
+				<td>availLeft</td>
+				<td></td>
+				<td>
+					Left edge of available screen area<br>
+					= left taskbar width<br>
+					IE8: undefined<br>
+					FF32: 0 *unable to test with taskbar
+				</td>
+			</tr>
+			<tr>
+				<td>availTop</td>
+				<td></td>
+				<td>
+					Top edge of available screen area<br>
+					= top taskbar height<br>
+					IE8: undefined<br>
+					FF32: 0 *unable to test with taskbar
+				</td>
+			</tr>
+			<tr>
+				<td>availWidth</td>
+				<td></td>
+				<td>
+					Available screen width (logical units)<br>
+					= screen width - left taskbar width - right taskbar width<br>
+					IE8, FF32: ok *unable to test with taskbar
+				</td>
+			</tr>
+			<tr>
+				<td>colorDepth</td>
+				<td></td>
+				<td>
+					Screen color depth<br>
+					IE8, FF32: 24
+				</td>
+			</tr>
+			<tr>
+				<td>height</td>
+				<td></td>
+				<td>
+					Screen height in pixels (logical units)<br>
+					IE8, FF32: ok<br>
+				</td>
+			</tr>
+			<tr>
+				<td>left</td>
+				<td></td>
+				<td>
+					X-offset of the current screen relative to main screen<br>
+					IE8: undefined<br>
+					FF32: 0 *unable to test with taskbar
+				</td>
+			</tr>
+			<tr>
+				<td>mozBrightness</td>
+				<td></td>
+				<td>
+					IE8, FF32: undefined
+				</td>
+			</tr>
+			<tr>
+				<td>mozEnabled</td>
+				<td></td>
+				<td>
+					IE8, FF32: undefined
+				</td>
+			</tr>
+			<tr>
+				<td>orientation</td>
+				<td></td>
+				<td>
+					IE8, FF32: undefined
+				</td>
+			</tr>
+			<tr>
+				<td>pixelDepth</td>
+				<td></td>
+				<td>
+					IE8: undefined<br>
+					FF32: 24
+				</td>
+			</tr>
+			<tr>
+				<td>top</td>
+				<td></td>
+				<td>
+					Y-offset of current screen relative to main screen<br>
+					IE8: undefined<br>
+					FF32: 0 *unable to test with taskbar
+				</td>
+			</tr>
+			<tr>
+				<td>width</td>
+				<td></td>
+				<td>
+					Screen width in pixels (logical units)<br>
+					IE8, FF32: ok
+				</td>
+			</tr>
+		</tbody>
+	</table>
+	<script type="text/javascript">
+		setInterval(function() {
+			var table = document.getElementById('properties');
+			for (var i = 0; i < table.rows.length; i++) {
+				var row = table.rows[i];
+				if (row.parentNode.tagName !== 'TBODY') continue;
+				var name = row.cells[0].innerHTML;
+				var value = screen[name];
+				row.cells[1].innerHTML = value;
+			}
+		}, 100);
+	</script>
+</body>
+</html>

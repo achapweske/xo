@@ -1,0 +1,24 @@
+<Style x:ref="HScrollBarThumb">
+	<Dictionary.definitions>
+		<Dictionary x:source="./definitions.xml" />
+	</Dictionary.definitions>
+	<Property name="minWidth" value="20" />
+	<Property name="minHeight" value="30" />
+	<Property name="template">
+		<Template>
+			<Grid x:name="border" padding="1">
+				<Widget x:name="thumb" width="100%" height="8" background="@hScrollbarThumbBackgroundColor" verticalAlignment="middle" />
+			</Grid>
+			<StateManager.stateGroups>
+				<StateGroup x:name="state">
+					<State name="mouseOver" value="{control.isMouseOver}">
+						<Property target="{thumb}" name="background" value="@hScrollbarThumbHoverBackgroundColor" />
+					</State>
+					<State name="pressed" value="{control.isDragging}">
+						<Property target="{thumb}" name="background" value="@hScrollbarThumbPressedBackgroundColor" />
+					</State>
+				</StateGroup>
+			</StateManager.stateGroups>			
+		</Template>
+	</Property>
+</Style>

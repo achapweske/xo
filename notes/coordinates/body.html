@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>document.body Properties</title>
+	<style>
+		table {
+			border-collapse: collapse;
+		}
+		table th,
+		table td {
+			text-align:left;
+			padding:5px 10px;
+			border-bottom:1px solid lightgray;
+		}
+	</style>
+</head>
+<body>
+	<h3>document.body</h3>
+	<table id="properties">
+		<thead>
+			<tr>
+				<th>Property</th>
+				<th>Value</th>
+				<th>Description</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr>
+				<td>clientHeight</td>
+				<td></td>
+				<td>
+					Inner element height (logical units)<br>
+					Includes padding but not margin, border, or horizontal scrollbar
+				</td>			
+			</tr>
+			<tr>
+				<td>clientLeft</td>
+				<td></td>
+				<td>
+					Distance from element's offsetLeft to its client area (logical units)<br>
+					= left border width + left-sided vertical scrollbar width
+				</td>			
+			</tr>
+			<tr>
+				<td>clientTop</td>
+				<td></td>
+				<td>
+					Distance from element's offsetTop to its client area (logical units)<br>
+					= top border width + top-sided horizontal scrollbar height
+				</td>			
+			</tr>
+			<tr>
+				<td>clientWidth</td>
+				<td></td>
+				<td>
+					Inner element width (logical units)<br>
+					Includes padding but not margin, border, or vertical scrollbar
+				</td>			
+			</tr>
+			<tr>
+				<td>scrollHeight</td>
+				<td></td>
+				<td>
+					Element height including area not visible due to scrolling (logical units)<br>
+					Includes padding but not margin, border, or horizontal scrollbar
+				</td>			
+			</tr>
+			<tr>
+				<td>scrollLeft</td>
+				<td></td>
+				<td>Number of pixels element has been scrolled horizontally (logical units)</td>			
+			</tr>
+			<tr>
+				<td>scrollTop</td>
+				<td></td>
+				<td>Number of pixels element has been scrolled vertically (logical units)</td>			
+			</tr>
+			<tr>
+				<td>scrollWidth</td>
+				<td></td>
+				<td>
+					Element width including area not visible due to scrolling (logical units)<br>
+					Includes padding but not margin, border, or vertical scrollbar
+				</td>			
+			</tr>
+			<tr>
+				<td>offsetHeight</td>
+				<td></td>
+				<td>
+					Outer element height (logical units)<br>
+					Includes border, padding, and horizontal scrollbar but not margin
+				</td>			
+			</tr>
+			<tr>
+				<td>offsetLeft</td>
+				<td></td>
+				<td>
+					Position of this element's border box relative to its offsetParent (logical units)<br>
+					For inline elements that wrap, the first border box is used
+				</td>			
+			</tr>
+			<tr>
+				<td>offsetParent</td>
+				<td></td>
+				<td>
+					Nearest positioned containing element<br>
+					If element is non-positioned, this returns nearest table cell or root element
+				</td>			
+			</tr>
+			<tr>
+				<td>offsetTop</td>
+				<td></td>
+				<td>
+					Position of this element's border box relative to its offsetParent (logical units)<br>
+				</td>			
+			</tr>
+			<tr>
+				<td>offsetWidth</td>
+				<td></td>
+				<td>
+					Outer element width (logical units)<br>
+					Includes border, padding, and vertical scrollbar but not margin
+				</td>			
+			</tr>
+		</tbody>
+		<tfoot>
+			<tr>
+				<td>getBoundingClientRect()</td>
+				<td id="getBoundingClientRect"></td>
+				<td>Union of all border boxes associated with this element</td>			
+			</tr>
+		</tfoot>
+	</table>
+	<script type="text/javascript">
+		setInterval(function() {
+			var table = document.getElementById('properties');
+			for (var i = 0; i < table.rows.length; i++) {
+				var row = table.rows[i];
+				if (row.parentNode.tagName !== 'TBODY') continue;
+				var name = row.cells[0].innerHTML.split('.');
+				var value = document.body[name[0]];
+				for (var j = 1; j < name.length; j++) {
+					if (value) value = value[name[j]];
+				}
+				row.cells[1].innerHTML = value;
+			}
+
+			var bounds = document.body.getBoundingClientRect();
+			document.getElementById('getBoundingClientRect').innerHTML = 
+				'top: ' + bounds.top + ',<br>' +
+				'right: ' + bounds.right + ',<br>' +
+				'bottom: ' + bounds.bottom + ',<br>' +
+				'left: ' + bounds.left + ',<br>' +
+				'width: ' + bounds.width + ',<br>' +
+				'height: ' + bounds.height;
+		}, 100);
+	</script>
+</body>
+</html>

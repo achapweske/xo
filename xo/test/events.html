@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<style>
+		h2 {
+			font-size: 16px;
+		}
+		pre {
+			width: 800px;
+			height: 400px;
+			overflow: auto;
+			padding: 10px;
+			border: 1px solid gray;
+		}
+	</style>
+	<script type="text/javascript">
+		function registerEvent(target, eventType, eventHandler) {
+			if (target.addEventListener) {
+				target.addEventListener(eventType, eventHandler, false);
+			}
+			else if (target.attachEvent) {
+				target.attachEvent('on'+eventType, eventHandler);
+			}
+		};
+		function serializeEvent(e) {
+			var result = '';
+			for (var key in e) {
+				var value = e[key];
+				if (value && value.tagName) {
+					value = value.tagName + '#' + value.id;
+				}
+				result += key + ': ' + value + ',<br>';
+			}
+			return result;
+		}
+	</script>
+</head>
+<body>
+	<h2>click</h2>
+	<div id="clickContainer">
+		<span id="clickTarget" style="padding:10px;background:#eee">
+			Click Me
+		</span>
+	</div>
+	<a id="clickLink" href="http://www.google.com">Prevent Default</a>
+	<pre id="clickOutput">
+	</pre>
+	<script type="text/javascript">
+		(function() {
+			var clickContainer = document.getElementById('clickContainer'),
+				clickTarget = document.getElementById('clickTarget'),
+				clickLink = document.getElementById('clickLink'),
+				clickOutput = document.getElementById('clickOutput');
+
+			registerEvent(clickContainer, 'click', function(e) {
+				if (!e) e = window.event;
+				clickOutput.innerHTML = serializeEvent(e);
+				return false;
+			});
+
+			registerEvent(clickLink, 'click', function(e) {
+				if (!e) e = window.event;
+				//e.returnValue = false;
+				//return false;
+				e.preventDefault();
+			});
+
+			registerEvent(clickTarget, 'click', function(e) {
+				if (!e) e = window.event;
+				//e.cancelBubble = true;
+				//e.stopPropagation();
+			});
+
+		})();
+	</script>
+	<div style="height:1000px">
+	</div>
+</body>
+</html>

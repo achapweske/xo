@@ -1,0 +1,33 @@
+<Style x:ref="TabControl">
+	<Style.definitions>
+		<Dictionary x:source="./definitions.xml" />
+	</Style.definitions>
+	<Property name="foreground" value="@foregroundColor" />
+	<Property name="background" value="@tabControlBackgroundColor" />
+	<Property name="borderWidth" value="1" />
+	<Property name="borderColor" value="@tabControlBorderColor" />
+	<Property name="padding" value="5" />
+	<Property name="template">
+		<Template>
+			<Grid x:name="border">
+				<Grid.rows>
+					<Row height="30" />
+					<Row />
+				</Grid.rows>
+				<HorizontalPanel x:name="itemsPanel" />
+				<ContentPresenter 
+					Grid.row="1" 
+					width="100%" 
+					height="100%"
+					margin="-1 0 0"
+					padding="{control.padding}"
+					background = "{control.background}"
+					borderWidth="{control.borderWidth}" 
+					borderColor="{control.borderColor}" 
+					content="{control.selectedContent}"
+					contentTemplate="{control.selectedContentTemplate}"
+					contentTemplateSelector="{control.selectedContentTemplateSelector}" />
+			</Grid>
+		</Template>
+	</Property>
+</Style>

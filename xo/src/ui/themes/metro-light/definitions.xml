@@ -1,0 +1,109 @@
+<Dictionary>
+
+	<FontFamily x:ref="controlFontFamily">Segoe UI, sans-serif</FontFamily>
+	<Number x:ref="controlFontSize">14.667</Number>
+	<FontFamily x:ref="contentFontFamily">Segoe UI, sans-serif</FontFamily>
+	<Number x:ref="contentFontSize">13.333</Number>
+
+	<Color x:ref="foregroundColor">#3F3F3F</Color>
+	<Color x:ref="lightForegroundColor">#FFFFFF</Color>
+
+	<!-- Button Colors -->
+	<Color x:ref="buttonBackgroundColor">#F9F9F9</Color>
+	<Color x:ref="buttonBorderColor">#B9B9B9</Color>
+	<Color x:ref="buttonHoverBackgroundColor">#E7E7E7</Color>
+	<Color x:ref="buttonHoverBorderColor">#858585</Color>
+	<Color x:ref="buttonPressedBackgroundColor">#00AADE</Color>
+	<Color x:ref="buttonPressedBorderColor">#00AADE</Color>
+
+	<!-- CheckBox Colors -->
+	<Color x:ref="checkBoxBackgroundColor">#FFFFFF</Color>
+	<Color x:ref="checkBoxHoverBackgroundColor">#FFFFFF</Color>
+	<Color x:ref="checkBoxPressedBackgroundColor">#FFFFFF</Color>
+	<Color x:ref="checkBoxFocusedBackgroundColor">#FFFFFF</Color>
+	<Color x:ref="checkBoxInvalidUnfocusedBackgroundColor">#FFFFFF</Color>
+	<Color x:ref="checkBoxInvalidFocusedBackgroundColor">#FFFFFF</Color>
+	<Color x:ref="checkBoxBorderColor">#B9B9B9</Color>
+	<Color x:ref="checkBoxHoverBorderColor">#858585</Color>
+	<Color x:ref="checkBoxPressedBorderColor">#00AADE</Color>
+	<Color x:ref="checkBoxFocusedBorderColor">#00AADE</Color>
+	<Color x:ref="checkBoxInvalidUnfocusedBorderColor">#F55E7F</Color>
+	<Color x:ref="checkBoxInvalidFocusedBorderColor">#D0284C</Color>
+	<Color x:ref="checkBoxIndeterminateCheckBackgroundColor">#858585</Color>
+	<Color x:ref="checkBoxCheckBackgroundColor">#00AADE</Color>
+
+	<!-- RadioButton Colors -->
+	<Color x:ref="radioButtonBackgroundColor">#FFFFFF</Color>
+	<Color x:ref="radioButtonHoverBackgroundColor">#FFFFFF</Color>
+	<Color x:ref="radioButtonPressedBackgroundColor">#FFFFFF</Color>
+	<Color x:ref="radioButtonFocusedBackgroundColor">#FFFFFF</Color>
+	<Color x:ref="radioButtonInvalidUnfocusedBackgroundColor">#FFFFFF</Color>
+	<Color x:ref="radioButtonInvalidFocusedBackgroundColor">#FFFFFF</Color>
+	<Color x:ref="radioButtonBorderColor">#B9B9B9</Color>
+	<Color x:ref="radioButtonHoverBorderColor">#858585</Color>
+	<Color x:ref="radioButtonPressedBorderColor">#00AADE</Color>
+	<Color x:ref="radioButtonFocusedBorderColor">#00AADE</Color>
+	<Color x:ref="radioButtonInvalidUnfocusedBorderColor">#F55E7F</Color>
+	<Color x:ref="radioButtonInvalidFocusedBorderColor">#D0284C</Color>
+	<Color x:ref="radioButtonIndeterminateCheckBackgroundColor">#858585</Color>
+	<Color x:ref="radioButtonCheckBackgroundColor">#00AADE</Color>
+
+	<!-- ListBox Colors -->
+	<Color x:ref="listBoxBackgroundColor">#FFFFFF</Color>
+	<Color x:ref="listBoxBorderColor">#B9B9B9</Color>
+	<Color x:ref="listBoxItemBackgroundColor">transparent</Color>
+	<Color x:ref="listBoxItemBorderColor">rgba(255,255,255,0)</Color>
+	<Color x:ref="listBoxItemHoverBackgroundColor">#E7E7E7</Color>
+	<Color x:ref="listBoxItemHoverBorderColor">#858585</Color>
+	<Color x:ref="listBoxItemPressedBackgroundColor">#00AADE</Color>
+	<Color x:ref="listBoxItemPressedBorderColor">#00AADE</Color>
+	<Color x:ref="listBoxItemSelectedBackgroundColor">#B2E1EF</Color>
+	<Color x:ref="listBoxItemSelectedBorderColor">#00AADE</Color>
+
+	<!-- TabItem Colors -->
+	<Color x:ref="tabControlBackgroundColor">#FFFFFF</Color>
+	<Color x:ref="tabControlBorderColor">#B9B9B9</Color>
+	<Color x:ref="tabItemBackgroundColor">#00AADE</Color>
+	<Color x:ref="tabItemBorderColor">#B9B9B9</Color>
+	<Color x:ref="tabItemHoverBackgroundColor">#E7E7E7</Color>
+	<Color x:ref="tabItemSelectedBackgroundColor">#FFFFFF</Color>
+	<Color x:ref="tabItemSelectedBorderColor">#B9B9B9</Color>
+	<Color x:ref="tabItemFocusedBorderColor">#00AADE</Color>
+	<!--
+    <Color x:ref="tabItemTexForegroundColor">rgba(255,255,255,.7)</Color>
+	-->
+	<Color x:ref="tabItemTexForegroundColor">rgb(240,240,240)</Color>
+    <Color x:ref="tabItemTexSelectedForegroundColor">#00AADE</Color>
+
+	<!-- TextBox -->
+	<Color x:ref="textBoxBackgroundColor">#FFFFFF</Color>
+	<Color x:ref="textBoxBorderColor">#B9B9B9</Color>
+	<Color x:ref="textBoxHoverBackgroundColor">#FFFFFF</Color>
+	<Color x:ref="textBoxHoverBorderColor">#858585</Color>
+	<Color x:ref="textBoxFocusedColor">#00AADE</Color>
+	<Color x:ref="textBoxReadOnlyBackgroundColor">rgba(86,86,86,0.2)</Color>
+
+	<!-- ScrollBar -->
+	<Color x:ref="hScrollbarThumbBackgroundColor">#858585</Color>
+	<Color x:ref="vScrollbarThumbBackgroundColor">#858585</Color>
+	<Color x:ref="scrollbarPageButtonArrowBackgroundColor">#858585</Color>
+	<Color x:ref="scrollbarPageButtonArrowHoverBackgroundColor">#565656</Color>
+	<Color x:ref="scrollbarPageButtonArrowPressedBackgroundColor">#00AADE</Color>
+	<Color x:ref="hScrollbarThumbHoverBackgroundColor">#565656</Color>
+	<Color x:ref="vScrollbarThumbHoverBackgroundColor">#565656</Color>
+	<Color x:ref="hScrollbarThumbPressedBackgroundColor">#00AADE</Color>
+	<Color x:ref="vScrollbarThumbPressedBackgroundColor">#00AADE</Color>
+
+	<!-- GridSplitter -->
+	<Color x:ref="gridSplitterBackgroundColor">#F9F9F9</Color>
+	<Color x:ref="gridSplitterBorderColor">#B9B9B9</Color>
+	<Color x:ref="gridSplitterHoverBackgroundColor">#E7E7E7</Color>
+	<Color x:ref="gridSplitterHoverBorderColor">#858585</Color>
+
+	<!-- Visual Glyphs brushes -->
+	<Color x:ref="glyphBackgroundColor">#858585</Color>
+	<Color x:ref="glyphHoverBackgroundColor">#565656</Color>
+	<Color x:ref="glyphPressedBackgroundColor">#00AADE</Color>
+	<Color x:ref="glyphDisabledBackgroundColor">#D7D7D7</Color>
+
+</Dictionary>

@@ -1,0 +1,28 @@
+<Style x:ref="TextBox">
+	<Style.definitions>
+		<Dictionary x:source="./definitions.xml" />
+	</Style.definitions>
+	<Property name="foreground" value="@foregroundColor" />
+	<Property name="background" value="@textBoxBackgroundColor" />
+	<Property name="borderWidth" value="1" />
+	<Property name="borderColor" value="@textBoxBorderColor" />
+	<Property name="fontFamily" value="@contentFontFamily" />
+	<Property name="fontSize" value="@contentFontSize" />
+	<Property name="padding" value="4 6" />
+	<Property name="minHeight" value="20" />
+	<Property name="template">
+		<Template>
+			<Grid x:name="border" background="{control.background}" borderColor="{control.borderColor}" borderWidth="{control.borderWidth}" padding="{control.padding}">
+				<Widget x:name="part.contentHost" height="100%" />
+			</Grid>
+			<StateManager.stateGroups>
+				<StateGroup x:name="state">
+					<State name="mouseOver" value="{control.isMouseOver}">
+						<Property target="{border}" name="background" value="@textBoxHoverBackgroundColor" />
+						<Property target="{border}" name="borderColor" value="@textBoxHoverBorderColor" />
+					</State>
+				</StateGroup>
+			</StateManager.stateGroups>			
+		</Template>
+	</Property>
+</Style>

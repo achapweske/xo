@@ -1,0 +1,8 @@
+<Style x:ref="ScrollBarPageButton">
+	<Property name="background" value="transparent" />
+	<Property name="template">
+		<Template>
+			<Widget background="{control.background}" width="{control.width}" height="{control.height}" />
+		</Template>
+	</Property>
+</Style>

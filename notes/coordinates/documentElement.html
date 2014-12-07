@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html style="border:2px solid blue;">
+<head>
+	<title>documentElement Properties</title>
+	<style>
+		table {
+			border-collapse: collapse;
+		}
+		table th,
+		table td {
+			text-align:left;
+			padding:5px 10px;
+			border-bottom:1px solid lightgray;
+		}
+	</style>
+</head>
+<body>
+	<h3>document.documentElement</h3>
+	<table id="properties" style="min-width: 500px">
+		<thead>
+			<tr>
+				<th>Property</th>
+				<th>Value</th>
+				<th>Description</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr>
+				<td>clientHeight</td>
+				<td></td>
+				<td>
+					Element inner height (logical units)<br>
+					Includes padding but not margin, border, or horizontal scrollbar<br>
+					IE8, FF32: Viewport inner height (logical units)
+				</td>			
+			</tr>
+			<tr>
+				<td>clientLeft</td>
+				<td></td>
+				<td>
+					Distance from element's offsetLeft to its client area (logical units)<br>
+					= left border width + left-sided vertical scrollbar width<br>
+					IE8: Element left border width (logical units)<br>
+					IE7: Viewport left border width + left-sided vertical scrollbar width<br>
+					FF32: 0
+				</td>			
+			</tr>
+			<tr>
+				<td>clientTop</td>
+				<td></td>
+				<td>
+					Distance from element's offsetTop to its client area (logical units)<br>
+					= top border width + top-sided horizontal scrollbar height<br>
+					IE8: top border width (logical units)<br>
+					IE7: Viewport top border width<br>
+					FF32: 0
+				</td>			
+			</tr>
+			<tr>
+				<td>clientWidth</td>
+				<td></td>
+				<td>
+					Inner element width (logical units)<br>
+					Includes padding but not margin, border, or vertical scrollbar<br>
+					IE8, FF32: Viewport inner width (logical units)
+				</td>			
+			</tr>
+			<tr>
+				<td>scrollHeight</td>
+				<td></td>
+				<td>
+					Element height including area not visible due to scrolling (logical units)<br>
+					Includes padding but not margin, border, or horizontal scrollbar<br>
+					IE8, FF32: Viewport inner height including area not visible due to scrolling (logical units)
+				</td>			
+			</tr>
+			<tr>
+				<td>scrollLeft</td>
+				<td></td>
+				<td>
+					Number of pixels element has been scrolled horizontally (logical units)<br>
+					IE8: ok
+				</td>			
+			</tr>
+			<tr>
+				<td>scrollTop</td>
+				<td></td>
+				<td>
+					Number of pixels element has been scrolled vertically (logical units)
+					IE8: ok
+				</td>			
+			</tr>
+			<tr>
+				<td>scrollWidth</td>
+				<td></td>
+				<td>
+					Element width including area not visible due to scrolling (logical units)<br>
+					Includes padding but not margin, border, or vertical scrollbar<br>
+					IE8, FF32: Viewport inner width including area not visible due to scrolling (logical units)
+				</td>			
+			</tr>
+			<tr>
+				<td>offsetHeight</td>
+				<td></td>
+				<td>
+					Outer element height (logical units)<br>
+					Includes border, padding, and horizontal scrollbar but not margin<br>
+					IE8: Viewport outer height<br>
+					FF32: ok
+				</td>			
+			</tr>
+			<tr>
+				<td>offsetLeft</td>
+				<td></td>
+				<td>
+					Position of this element's border box relative to its offsetParent (logical units)<br>
+					For inline elements that wrap, the first border box is used<br>
+					IE8: 0<br>
+					FF32: ok
+				</td>			
+			</tr>
+			<tr>
+				<td>offsetParent</td>
+				<td></td>
+				<td>
+					Nearest positioned containing element<br>
+					If element is non-positioned, this returns nearest table cell or root element<br>
+					IE8, FF32: undefined
+				</td>			
+			</tr>
+			<tr>
+				<td>offsetTop</td>
+				<td></td>
+				<td>
+					Position of this element's border box relative to its offsetParent (logical units)<br>
+					IE8: 0<br>
+					FF32: ok
+				</td>			
+			</tr>
+			<tr>
+				<td>offsetWidth</td>
+				<td></td>
+				<td>
+					Outer element width (logical units)<br>
+					Includes border, padding, and vertical scrollbar but not margin<br>
+					IE8: Viewport outer width, includes browser tab border and vertical scrollbar<br>
+					FF32: ok
+				</td>			
+			</tr>
+		</tbody>
+		<tfoot>
+			<tr>
+				<td>getBoundingClientRect()</td>
+				<td id="getBoundingClientRect"></td>
+				<td>
+					Union of all border boxes associated with this element<br>
+					IE8: Viewport outer box relative to viewport inner box (e.g. left: -2, top: -2, right: 1278, bottom: 855)
+				</td>			
+			</tr>
+		</tfoot>
+	</table>
+	<p>IE8: The documentElement may have a margin, border, and padding and supports relative positioning. However, the above properties apply to the viewport itself which includes the top-level scrollbars and a 2px border around the content area of the browser tab</p>
+	<p>FF32: For client and scroll properties, behavior same as IE8 but with a 0px border around the viewport. The offset properties apply to the documentElement itself and behaves as though the offsetParent is the padding box of the documentElement (i.e., if documentElement has a 2px border, then offsetLeft = offsetTop = -2</p>
+	<script type="text/javascript">
+
+		function resolveValue(obj, path) {
+			var segments = path.split('.');
+			for (var i = 0; i < segments.length; i++) {
+				if (obj) obj = obj[segments[i]];
+			}
+			if (obj && obj.tagName) 
+				return obj.tagName + '#' + obj.id;
+			return obj;
+		}
+
+		setInterval(function() {
+			var table = document.getElementById('properties');
+			for (var i = 0; i < table.rows.length; i++) {
+				var row = table.rows[i];
+				if (row.parentNode.tagName !== 'TBODY') continue;
+				var path = row.cells[0].innerHTML;
+				row.cells[1].innerHTML = resolveValue(document.documentElement, path);
+			}
+
+			var bounds = document.documentElement.getBoundingClientRect();
+			document.getElementById('getBoundingClientRect').innerHTML = 
+				'top: ' + bounds.top + ',<br>' +
+				'right: ' + bounds.right + ',<br>' +
+				'bottom: ' + bounds.bottom + ',<br>' +
+				'left: ' + bounds.left + ',<br>' +
+				'width: ' + bounds.width + ',<br>' +
+				'height: ' + bounds.height;
+		}, 100);
+	</script>
+</body>
+</html>

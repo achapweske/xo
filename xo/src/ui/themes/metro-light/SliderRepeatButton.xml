@@ -1,0 +1,10 @@
+<Style x:ref="SliderRepeatButton">
+	<Dictionary.definitions>
+		<Dictionary x:source="./definitions.xml" />
+	</Dictionary.definitions>
+	<Property name="template">
+		<Template>
+			<Widget background="transparent" />
+		</Template>
+	</Property>
+</Style>

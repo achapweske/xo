@@ -1,0 +1,411 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Element Properties</title>
+	<style>
+		label {
+			display: block;
+		}
+		table {
+			border-collapse: collapse;
+		}
+		table th,
+		table td {
+			text-align:left;
+			padding:5px 10px;
+			border-bottom:1px solid lightgray;
+		}
+	</style>
+</head>
+<body>
+	<h3>element</h3>
+
+	<form style="display:inline-block">
+		<fieldset>
+			<legend>outer</legend>
+			<table id="outer-settings">
+				<tr>
+					<td>display</td> 
+					<td><input type="text" /></td>
+				</tr>
+				<tr>
+					<td>margin</td>
+					<td><input type="text" /></td>
+				</tr>
+				<tr>
+					<td>border</td>
+					<td><input type="text" /></td>
+				</tr>
+				<tr>
+					<td>padding</td>
+					<td><input type="text" /></td>
+				</tr>
+				<tr>
+					<td>width</td>
+					<td><input type="text" /></td>
+				</tr>
+				<tr>
+					<td>height</td>
+					<td><input type="text" /></td>
+				</tr>
+				<tr>
+					<td>overflow</td>
+					<td><input type="text" /></td>
+				</tr>
+				<tr>
+					<td>direction</td>
+					<td><input type="text" /></td>
+				</tr>
+				<tr>
+					<td>transform</td>
+					<td><input type="text" /></td>
+				</tr>
+			</table>
+		</fieldset>
+	</form>
+
+	<form style="display:inline-block">
+		<fieldset>
+			<legend>inner</legend>
+			<table id="inner-settings">
+				<tr>
+					<td>display</td> 
+					<td><input type="text" /></td>
+				</tr>
+				<tr>
+					<td>margin</td>
+					<td><input type="text" /></td>
+				</tr>
+				<tr>
+					<td>border</td>
+					<td><input type="text" /></td>
+				</tr>
+				<tr>
+					<td>padding</td>
+					<td><input type="text" /></td>
+				</tr>
+				<tr>
+					<td>width</td>
+					<td><input type="text" /></td>
+				</tr>
+				<tr>
+					<td>height</td>
+					<td><input type="text" /></td>
+				</tr>
+				<tr>
+					<td>overflow</td>
+					<td><input type="text" /></td>
+				</tr>
+				<tr>
+					<td>direction</td>
+					<td><input type="text" /></td>
+				</tr>
+				<tr>
+					<td>transform</td>
+					<td><input type="text" /></td>
+				</tr>
+			</table>
+		</fieldset>
+	</form>
+
+	<div style="margin:50px 10px">
+		<div id="outer">
+			<div id="inner">
+				Test
+			</div>
+		</div>
+	</div>
+
+	<table id="properties">
+		<thead>
+			<tr>
+				<th>Property</th>
+				<th>Outer</th>
+				<th>Inner</th>
+				<th>Description</th>
+				<th></th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr>
+				<td>getBoundingClientRect()</td>
+				<td id="innerBoundingClientRect"></td>
+				<td id="outerBoundingClientRect"></td>
+				<td>Union of all border boxes associated with this element</td>			
+			</tr>
+			<tr>
+				<td>clientHeight</td>
+				<td></td>
+				<td></td>
+				<td>
+					Inner element height (logical units)<br>
+					Includes padding but not margin, border, or horizontal scrollbar
+				</td>
+				<td>
+					<button onclick="onTestClientProperties()">Test</button>
+					<script type="text/javascript">
+						function onTestClientProperties() {
+							settings.apply({
+								outer: {
+									border: '1px solid black'
+								},
+								inner: {
+									border: '1px solid blue',
+									margin: '10px',
+									height: '50px',
+									overflow: 'scroll',
+								}
+							});
+						}
+					</script>
+				</td>		
+			</tr>
+			<tr>
+				<td>clientLeft</td>
+				<td></td>
+				<td></td>
+				<td>
+					Distance from element's offsetLeft to its client area (logical units)<br>
+					= left border width + left-sided vertical scrollbar width
+				</td>			
+			</tr>
+			<tr>
+				<td>clientTop</td>
+				<td></td>
+				<td></td>
+				<td>
+					Distance from element's offsetTop to its client area (logical units)<br>
+					= top border width + top-sided horizontal scrollbar height
+				</td>			
+			</tr>
+			<tr>
+				<td>clientWidth</td>
+				<td></td>
+				<td></td>
+				<td>
+					Inner element width (logical units)<br>
+					Includes padding but not margin, border, or vertical scrollbar
+				</td>			
+			</tr>
+			<tr>
+				<td>scrollHeight</td>
+				<td></td>
+				<td></td>
+				<td>
+					Element height including area not visible due to scrolling (logical units)<br>
+					Includes padding but not margin, border, or horizontal scrollbar
+				</td>
+				<td>
+					<button onclick="onTestScrollProperties()">Test</button>
+					<script type="text/javascript">
+						function onTestScrollProperties() {
+							settings.apply({
+								outer: {
+									border: '1px solid black',
+									width: '100px',
+									height: '100px',
+									overflow: 'auto'
+								},
+								inner: {
+									border: '1px solid blue',
+									margin: '10px',
+									width: '500px',
+									height: '500px',
+								}
+							});
+						}
+					</script>		
+				</td>
+			</tr>
+			<tr>
+				<td>scrollLeft</td>
+				<td></td>
+				<td></td>
+				<td>Number of pixels element has been scrolled horizontally (logical units)</td>			
+			</tr>
+			<tr>
+				<td>scrollTop</td>
+				<td></td>
+				<td></td>
+				<td>Number of pixels element has been scrolled vertically (logical units)</td>			
+			</tr>
+			<tr>
+				<td>scrollWidth</td>
+				<td></td>
+				<td></td>
+				<td>
+					Element width including area not visible due to scrolling (logical units)<br>
+					Includes padding but not margin, border, or vertical scrollbar
+				</td>			
+			</tr>
+			<tr>
+				<td>offsetHeight</td>
+				<td></td>
+				<td></td>
+				<td>
+					Outer element height (logical units)<br>
+					Includes border, padding, and horizontal scrollbar but not margin
+				</td>			
+			</tr>
+			<tr>
+				<td>offsetLeft</td>
+				<td></td>
+				<td></td>
+				<td>
+					Position of this element's border box relative to its offsetParent (logical units)<br>
+					For inline elements that wrap, the first border box is used<br>
+					IE9/10, FF3.6/33, S4/5, C14/38, O10.6/25: unaffected by CSS transforms
+				</td>			
+			</tr>
+			<tr>
+				<td>offsetParent</td>
+				<td></td>
+				<td></td>
+				<td>
+					Nearest positioned containing element<br>
+					If element is non-positioned, this returns nearest table cell or root element<br>
+					IE10, FF3.6/33: transform property also qualifies an element as an offset parent
+				</td>			
+			</tr>
+			<tr>
+				<td>offsetTop</td>
+				<td></td>
+				<td></td>
+				<td>
+					Position of this element's border box relative to its offsetParent (logical units)<br>
+				</td>			
+			</tr>
+			<tr>
+				<td>offsetWidth</td>
+				<td></td>
+				<td></td>
+				<td>
+					Outer element width (logical units)<br>
+					Includes border, padding, and vertical scrollbar but not margin
+				</td>			
+			</tr>
+		</tbody>
+	</table>
+	<script type="text/javascript">
+
+		var vendorNamePrefixes = [ "Webkit", "O", "Moz", "ms" ];
+
+		function detectPropertyName(style, name) {
+			// Force lowerCamelCase below for microsoft prefix
+			name = name.replace(/^-ms-/, "ms-");
+
+			// Convert dash-separated-name to CamelCase
+			name = name.replace(/-([\da-z])/gi, function(match, p1) {
+				return p1.toUpperCase();
+			});
+
+			// See if property with given name exists
+			if (name in style) {
+				return name;
+			}
+
+			// If not, try name with vendor prefixes
+			var rootName = name[0].toUpperCase() + name.slice(1);
+			for (var i = 0; i < vendorNamePrefixes.length; i++) {
+				var vendorName = vendorNamePrefixes[i] + rootName;
+				if (vendorName in style) {
+					return vendorName;
+				}
+			}
+
+			return name;
+		};
+
+		var settings = {
+			all: [],
+			init: function(id) {
+				var table = document.getElementById(id + '-settings');
+				for (var i = 0; i < table.rows.length; i++) {
+					var row = table.rows[i],
+						name = row.cells[0].innerHTML,
+						input = row.cells[1].firstChild;
+					this.register(id, name, input);
+				}
+			},
+			register: function(id, name, input) {
+				input.onkeyup = function() {
+					var style = document.getElementById(id).style;
+					name = detectPropertyName(style, name);
+					style[name] = input.value;
+				}
+				this.all.push({ id: id, name: name, input: input });
+			},
+			update: function() {
+				for (var i = 0; i < this.all.length; i++) {
+					var setting = this.all[i];
+					setting.input.value = document.getElementById(setting.id).style[setting.name];
+				}
+			},
+			apply: function(options) {
+				for (var i = 0; i < this.all.length; i++) {
+					var setting = this.all[i];
+					options[setting.id] = options[setting.id] || {};
+				}
+				for (var id in options) {
+					var properties = options[id];
+					for (var j = 0; j < this.all.length; j++) {
+						var setting = this.all[j];
+						if (setting.id !== id) continue;
+						properties[setting.name] = properties[setting.name] || '';
+					}
+					for (var name in properties) {
+						document.getElementById(id).style[name] = properties[name];
+					}
+				}
+				this.update();
+			}
+		};
+
+		settings.init('outer');
+		settings.init('inner');
+
+		function resolveValue(obj, path) {
+			var segments = path.split('.');
+			for (var i = 0; i < segments.length; i++) {
+				if (obj) obj = obj[segments[i]];
+			}
+			if (obj && obj.tagName) 
+				return obj.tagName + '#' + obj.id;
+			return obj;
+		}
+
+		setInterval(function() {
+			var table = document.getElementById('properties'),
+				inner = document.getElementById('inner'),
+				outer = document.getElementById('outer');
+
+			for (var i = 0; i < table.rows.length; i++) {
+				var row = table.rows[i];
+				if (row.parentNode.tagName !== 'TBODY') continue;
+				var path = row.cells[0].innerHTML;
+				if (path.indexOf('(') !== -1) continue;
+				row.cells[1].innerHTML = resolveValue(outer, path);
+				row.cells[2].innerHTML = resolveValue(inner, path);
+			}
+
+			var bounds = document.getElementById('inner').getBoundingClientRect();
+			document.getElementById('innerBoundingClientRect').innerHTML = 
+				'top: ' + bounds.top + ',<br>' +
+				'right: ' + bounds.right + ',<br>' +
+				'bottom: ' + bounds.bottom + ',<br>' +
+				'left: ' + bounds.left + ',<br>' +
+				'width: ' + bounds.width + ',<br>' +
+				'height: ' + bounds.height;
+
+			var bounds = document.getElementById('outer').getBoundingClientRect();
+			document.getElementById('outerBoundingClientRect').innerHTML = 
+				'top: ' + bounds.top + ',<br>' +
+				'right: ' + bounds.right + ',<br>' +
+				'bottom: ' + bounds.bottom + ',<br>' +
+				'left: ' + bounds.left + ',<br>' +
+				'width: ' + bounds.width + ',<br>' +
+				'height: ' + bounds.height;
+		}, 100);
+	</script>
+</body>
+</html>

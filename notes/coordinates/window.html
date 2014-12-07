@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Window Properties</title>
+	<style>
+		table {
+			border-collapse: collapse;
+		}
+		table th,
+		table td {
+			text-align:left;
+			padding:5px 10px;
+			border-bottom:1px solid lightgray;
+		}
+	</style>
+</head>
+<body>
+	<h3>window</h3>
+	<table id="properties">
+		<thead>
+			<tr>
+				<th>Property</th>
+				<th>Value</th>
+				<th>Description</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr>
+				<td>devicePixelRatio</td>
+				<td></td>
+				<td>
+					Device pixels per logical pixel<br>
+					IE8: undefined<br>
+					FF32: ok
+				</td>
+			</tr>
+			<tr>
+				<td>innerHeight</td>
+				<td></td>
+				<td>
+					Viewport height including scrollbars (logical units)<br>
+					IE8: undefined<br>
+					FF32: ok
+				</td>
+			</tr>
+			<tr>
+				<td>innerWidth</td>
+				<td></td>
+				<td>
+					Viewport width including scrollbars (logical units)<br>
+					IE8: undefined<br>
+					FF32: ok
+				</td>
+			</tr>
+			<tr>
+				<td>outerHeight</td>
+				<td></td>
+				<td>
+					Height of entire browser window (logical units)<br>
+					IE8: undefined<br>
+					FF32: ok
+				</td>
+			</tr>
+			<tr>
+				<td>outerWidth</td>
+				<td></td>
+				<td>
+					Width of entire browser window (logical units)<br>
+					IE8: undefined
+					FF32: ok
+				</td>
+			</tr>
+			<tr>
+				<td>pageXOffset</td>
+				<td></td>
+				<td>
+					Document's horizontal scroll offset (logical units)<br>
+					IE8: undefined<br>
+					FF32: ok
+				</td>
+			</tr>
+			<tr>
+				<td>pageYOffset</td>
+				<td></td>
+				<td>
+					Document's vertical scroll offset (logical units)<br>
+					IE8: undefined<br>
+					FF32: ok
+				</td>
+			</tr>
+			<tr>
+				<td>screenLeft</td>
+				<td></td>
+				<td>
+					Offset from left edge of screen to left edge of browser window (device units)<br>
+					IE8: offset to left edge of browser tab content area (logical units)<br>
+					FF32: undefined
+				</td>
+			</tr>
+			<tr>
+				<td>screenTop</td>
+				<td></td>
+				<td>
+					Offset from top edge of screen to top edge of browser window (device units)<br>
+					IE8: offset to top edge of browser tab content area (logical units)<br>
+					FF32: undefined
+				</td>
+			</tr>
+			<tr>
+				<td>screenX</td>
+				<td></td>
+				<td>
+					Alias for screenLeft<br>
+					IE8: undefined<br>
+					FF32: ok
+				</td>
+			</tr>
+			<tr>
+				<td>screenY</td>
+				<td></td>
+				<td>
+					Alias for screenTop<br>
+					IE8: undefined<br>
+					FF32: ok
+				</td>
+			</tr>
+			<tr>
+				<td>scrollMaxX</td>
+				<td></td>
+				<td>
+					Maximum value for scrollX<br>
+					= document width - viewport width<br>
+					IE8: undefined<br>
+					FF32: ok
+				</td>
+			</tr>
+			<tr>
+				<td>scrollMaxY</td>
+				<td></td>
+				<td>
+					Maximum value for scrollY<br>
+					= document height - viewport height<br>
+					IE8: undefined<br>
+					FF32: ok
+				</td>
+			</tr>
+			<tr>
+				<td>scrollX</td>
+				<td></td>
+				<td>
+					Alias for pageXOffset<br>
+					IE8: undefined<br>
+					FF32: ok
+				</td>
+			</tr>
+			<tr>
+				<td>scrollY</td>
+				<td></td>
+				<td>
+					Alias for pageYOffset<br>
+					IE8: undefined<br>
+					FF32: ok
+				</td>
+			</tr>
+			<tr>
+				<td>scrollbars.visible</td>
+				<td></td>
+				<td>
+					IE8: undefined<br>
+					FF32: true
+				</td>
+			</tr>
+		</tbody>
+	</table>
+	<p>FF32: In fullscreen mode, outerWidth/Height = screenWidth/Height + 16 (and screenX = screenY = -8)</p>
+	<script type="text/javascript">
+		setInterval(function() {
+			var table = document.getElementById('properties');
+			for (var i = 0; i < table.rows.length; i++) {
+				var row = table.rows[i];
+				if (row.parentNode.tagName !== 'TBODY') continue;
+				var name = row.cells[0].innerHTML.split('.');
+				var value = window[name[0]];
+				for (var j = 1; j < name.length; j++) {
+					if (value) value = value[name[j]];
+				}
+				row.cells[1].innerHTML = value;
+			}
+		}, 100);
+	</script>
+</body>
+</html>

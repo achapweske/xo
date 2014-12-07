@@ -1,0 +1,48 @@
+<Style x:ref="RepeatButton">
+	<Style.definitions>
+		<Dictionary x:source="./definitions.xml" />
+	</Style.definitions>
+	<Property name="background" value="@buttonBackgroundColor" />
+	<Property name="borderColor" value="@buttonBorderColor" />
+	<Property name="borderRadius" value="2" />
+	<Property name="borderWidth" value="1" />
+	<Property name="foreground" value="@foregroundColor" />
+	<Property name="fontSize" value="@controlFontSize" />
+	<Property name="fontFamily" value="@controlFontFamily" />
+	<Property name="horizontalContentAlignment" value="center" />
+	<Property name="verticalContentAlignment" value="middle" />
+	<Property name="padding" value="0 10" />
+	<Property name="minWidth" value="30" />
+	<Property name="minHeight" value="30" />
+	<Property name="template">
+		<Template>
+			<Grid 
+				x:name="border" 
+				padding="{control.padding}"
+				background="{control.background}" 
+				borderColor="{control.borderColor}" 
+				borderWidth="{control.borderWidth}" 
+				borderRadius="{control.borderRadius}">
+				<ContentPresenter 
+					horizontalAlignment="{control.horizontalContentAlignment}" 
+					verticalAlignment="{control.verticalContentAlignment}" 
+					content="{control.content}" 
+					contentTemplate="{control.contentTemplate}" 
+					contentTemplateSelector="{control.contentTemplateSelector}" />
+			</Grid>
+			<StateManager.stateGroups>
+				<StateGroup x:name="state">
+					<State name="mouseOver" value="{control.isMouseOver}">
+						<Property target="{border}" name="background" value="@buttonHoverBackgroundColor" />
+						<Property target="{border}" name="borderColor" value="@buttonHoverBorderColor" />
+					</State>
+					<State name="pressed" value="{control.isPressed}">
+						<Property target="{border}" name="background" value="@buttonPressedBackgroundColor" />
+						<Property target="{border}" name="borderColor" value="@buttonPressedBorderColor" />
+						<Property target="{border}" name="foreground" value="@lightForegroundColor" />
+					</State>
+				</StateGroup>
+			</StateManager.stateGroups>			
+		</Template>
+	</Property>
+</Style>

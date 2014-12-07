@@ -1,0 +1,30 @@
+<Style x:ref="GridSplitter" xmlns:g="src/ui/graphics">
+	<Style.definitions>
+		<Dictionary x:source="./definitions.xml" />
+	</Style.definitions>
+	<Property name="foreground" value="@foregroundColor" />
+	<Property name="background" value="@gridSplitterBackgroundColor" />
+	<Property name="borderColor" value="@gridSplitterBorderColor" />
+	<Property name="borderWidth" value="1" />
+	<Property name="cursor" value="ew-resize" />
+	<Condition test="{height() === '100%'}">
+		<Property name="template">
+			<Template>
+				<Grid x:name="border" background="{control.background}" borderColor="{control.borderColor}" borderWidth="{control.borderWidth}" minHeight="7" minWidth="7">
+					<g:Drawing width="3" height="20" verticalAlignment="middle" horizontalAlignment="center">
+						<g:Line x1="0.5" y1="0" x2="0.5" y2="20" stroke="@glyphBackgroundColor" />
+						<g:Line x1="2.5" y1="0" x2="2.5" y2="20" stroke="@glyphBackgroundColor" />
+					</g:Drawing>
+				</Grid>
+				<StateManager.stateGroups>
+					<StateGroup x:name="state">
+						<State name="mouseOver" value="{control.isMouseOver}">
+							<Property target="{border}" name="background" value="@gridSplitterHoverBackgroundColor" />
+							<Property target="{border}" name="borderColor" value="@gridSplitterHoverBorderColor" />
+						</State>
+					</StateGroup>
+				</StateManager.stateGroups>			
+			</Template>
+		</Property>
+	</Condition>
+</Style>

@@ -1,0 +1,32 @@
+<Style x:ref="ScrollBarButton">
+	<Dictionary.definitions>
+		<Dictionary x:source="./definitions.xml" />
+	</Dictionary.definitions>
+	<Property name="minWidth" value="30" />
+	<Property name="minHeight" value="30" />
+	<Property name="padding" value="0" />
+	<Property name="template">
+		<Template>
+			<Grid rowCount="1" columnCount="1" background="transparent" padding="{control.padding}">
+				<Path x:name="arrow"
+					width="10"
+					height="6"
+					horizontalAlignment="{control.horizontalContentAlignment}" 
+					verticalAlignment="{control.verticalContentAlignment}" 
+					fill="@scrollbarPageButtonArrowBackgroundColor"
+					data="M 541.537,173.589L 531.107,173.589L 536.322,167.49L 541.537,173.589 Z"
+					viewBox="531.107 167.49 10.530 6.09" />
+			</Grid>
+			<StateManager.stateGroups>
+				<StateGroup x:name="state">
+					<State name="mouseOver" value="{control.isMouseOver}">
+						<Property target="{arrow}" name="fill" value="@scrollbarPageButtonArrowHoverBackgroundColor" />
+					</State>
+					<State name="pressed" value="{control.isPressed}">
+						<Property target="{arrow}" name="fill" value="@scrollbarPageButtonArrowPressedBackgroundColor" />
+					</State>
+				</StateGroup>
+			</StateManager.stateGroups>	
+		</Template>
+	</Property>
+</Style>

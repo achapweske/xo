@@ -1,0 +1,21 @@
+
+== FF32 ==
+
+If the height of the content of a td is given as a percentage, it is computed relative to:
+-If height of td is given explicitly (in pixels), then use that height
+-Else if height of td OR tr are given as a percentage, then use the *actual* height of the row
+-Else use auto
+
+tr heights are interpreted as minimum height for that row, so setting it to 0.1% is essentially the same as auto/0.
+
+So to get desired behavior, make sure all rows have a height set and default to 0.1%.
+
+== IE8 ==
+
+If the height of the content of a td is given as a percentage, it is computed relative to:
+-If height of td is given (in pixels or perecent), then use that height
+-Else use auto
+
+When the height for a td is specified as a percent, it is interpreted as relative to the used height of the table.
+
+So to get desired behavior, all table cells must have a height set explicitly.

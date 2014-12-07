@@ -1,0 +1,50 @@
+
+screen:
+	width/height - screen size in device units
+
+window:
+	innerWidth/Height - browser content area including scrollbars
+	scrollX/Y - number of pixels document is scrolled
+	scrollMaxX/Y - maximum number of pixels document can be scrolled
+	pageX/YOffset - alias for scrollX/Y
+	screenX/Y - browser position in screen coordinates
+	outerWidth/Height - size of the entire browser window
+
+document.documentElement:
+	clientLeft/Top
+	clientWidth/Height - browser content area excluding scrollbars
+	clientHeight
+	scrollLeft/Top
+	scrollWidth/Height
+	offsetParent
+	offsetLeft/Top
+	offsetWidth/Height - page size
+
+document.body:
+	clientLeft/Top
+	clientWidth/Height
+	scrollLeft/Top
+	scrollWidth/Height
+	offsetParent
+	offsetLeft/Top
+	offsetWidth/Height
+
+div:
+	clientLeft
+	clientTop
+	clientWidth
+	clientHeight
+	scrollLeft
+	scrollTop
+	offsetWidth
+	offsetHeight
+
+span:
+	clientLeft
+	clientTop
+	clientWidth
+	clientHeight
+	scrollLeft
+	scrollTop
+	offsetWidth
+	offsetHeight

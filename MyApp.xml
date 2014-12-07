@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+<Application>
+	<Application.definitions>
+		<Dictionary x:source="src/ui/themes/metro-light/theme.xml" />
+	</Application.definitions>
+	<Application.view>
+		<Grid x:source="MyView" />
+	</Application.view>
+</Application>

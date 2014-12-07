@@ -1,0 +1,68 @@
+<Style x:ref="CheckBox">
+	<Style.definitions>
+		<Dictionary x:source="./definitions.xml" />
+	</Style.definitions>
+	<Property name="foreground" value="@foregroundColor" />
+	<Property name="fontSize" value="@controlFontSize" />
+	<Property name="fontFamily" value="@controlFontFamily" />
+	<Property name="horizontalContentAlignment" value="left" />
+	<Property name="verticalContentAlignment" value="middle" />
+	<Property name="padding" value="0 0 0 6" />
+	<Property name="minWidth" value="30" />
+	<Property name="minHeight" value="30" />
+	<Property name="borderWidth" value="1" />
+	<Property name="template">
+		<Template>
+			<Grid>
+				<Grid.columns>
+					<Column width="30" />
+					<Column />
+				</Grid.columns>
+				<Grid 
+					x:name="box" 
+					width="18" 
+					height="18" 
+					horizontalAlignment="center"
+					verticalAlignment="middle"
+					background="@checkBoxBackgroundColor" 
+					borderColor="@checkBoxBorderColor" 
+					borderWidth="1">
+					<Path 
+						x:name="check" 
+						width="12" 
+						height="10" 
+						horizontalAlignment="center"
+						verticalAlignment="middle"
+						viewBox="1138 430 9 8" 
+						fill="none"
+						data="M 1145.607177734375,430 C1145.607177734375,430 1141.449951171875,435.0772705078125 1141.449951171875,435.0772705078125 1141.449951171875,435.0772705078125 1139.232177734375,433.0999755859375 1139.232177734375,433.0999755859375 1139.232177734375,433.0999755859375 1138,434.5538330078125 1138,434.5538330078125 1138,434.5538330078125 1141.482177734375,438 1141.482177734375,438 1141.482177734375,438 1141.96875,437.9375 1141.96875,437.9375 1141.96875,437.9375 1147,431.34619140625 1147,431.34619140625 1147,431.34619140625 1145.607177734375,430 1145.607177734375,430 z" />
+				</Grid>
+				<ContentPresenter 
+					Grid.column="1"
+					margin="{control.padding}" 
+					horizontalAlignment="{control.horizontalContentAlignment}" 
+					verticalAlignment="{control.verticalContentAlignment}" 
+					content="{control.content}" 
+					contentTemplate="{control.contentTemplate}" 
+					contentTemplateSelector="{control.contentTemplateSelector}" />
+			</Grid>
+			<StateManager.stateGroups>
+				<StateGroup x:name="state">
+					<State name="mouseOver" value="{control.isMouseOver}">
+						<Property target="{box}" name="background" value="@checkBoxHoverBackgroundColor" />
+						<Property target="{box}" name="borderColor" value="@checkBoxHoverBorderColor" />
+					</State>
+					<State name="pressed" value="{control.isPressed}">
+						<Property target="{box}" name="background" value="@checkBoxPressedBackgroundColor" />
+						<Property target="{box}" name="borderColor" value="@checkBoxPressedBorderColor" />
+					</State>
+				</StateGroup>
+				<StateGroup x:name="checkedState">
+					<State name="checked" value="{control.isChecked}">
+						<Property target="{check}" name="fill" value="@checkBoxCheckBackgroundColor" />
+					</State>
+				</StateGroup>
+			</StateManager.stateGroups>			
+		</Template>
+	</Property>
+</Style>

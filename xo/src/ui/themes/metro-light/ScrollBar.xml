@@ -1,0 +1,56 @@
+<Style x:ref="ScrollBar">
+	<Dictionary.definitions>
+		<Dictionary x:source="./definitions.xml" />
+		<Style x:source="src/ui/themes/metro-light/HScrollBarThumb.xml" />
+		<Style x:source="src/ui/themes/metro-light/ScrollBarButton.xml" />
+		<Style x:source="src/ui/themes/metro-light/ScrollBarPageButton.xml" />
+	</Dictionary.definitions>
+	<Property name="height" value="30" />
+	<Property name="minHeight" value="30" />
+	<Property name="template">
+		<Template>
+			<Grid x:name="border" rowCount="1" background="{control.background}" borderColor="{control.borderColor}" borderWidth="{control.borderWidth}" padding="{control.padding}">
+				<Grid.columns>
+					<Column width="30" />
+					<Column />
+					<Column width="30" />
+				</Grid.columns>
+				<RepeatButton 
+					Grid.column="0" 
+					x:name="leftRepeatButton" 
+					style="@ScrollBarButton" 
+					verticalAlignment="center" 
+					transform="rotate(-90deg)" 
+					transformOrigin="center"  />
+
+				<Track Grid.column="1" x:name="track" width="100%" value="{control.value}">
+					<Track.decreaseRepeatButton>
+						<RepeatButton style="@ScrollBarPageButton" />
+					</Track.decreaseRepeatButton>
+					<Track.thumb>
+						<Thumb style="@HScrollBarThumb" verticalAlignment="center" height="30" />
+					</Track.thumb>
+					<Track.increaseRepeatButton>
+						<RepeatButton style="@ScrollBarPageButton" />
+					</Track.increaseRepeatButton>
+				</Track>
+
+				<RepeatButton 
+					Grid.column="2" 
+					x:name="rightRepeatButton" 
+					style="@ScrollBarButton" 
+					verticalAlignment="center" 
+					transform="rotate(90deg)" 
+					transformOrigin="center" />
+			</Grid>
+			<StateManager.stateGroups>
+				<StateGroup x:name="state">
+					<State name="mouseOver" value="{control.isMouseOver}">
+						<Property target="{border}" name="background" value="@textBoxHoverBackgroundColor" />
+						<Property target="{border}" name="borderColor" value="@textBoxHoverBorderColor" />
+					</State>
+				</StateGroup>
+			</StateManager.stateGroups>			
+		</Template>
+	</Property>
+</Style>

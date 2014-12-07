@@ -1,0 +1,8 @@
+<Style x:ref="TextBlock">
+	<Style.definitions>
+		<Dictionary x:source="./definitions.xml" />
+	</Style.definitions>
+	<Property name="foreground" value="@foregroundColor" />
+	<Property name="fontSize" value="@contentFontSize" />
+	<Property name="fontFamily" value="@contentFontFamily" />
+</Style>

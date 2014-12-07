@@ -1,0 +1,11 @@
+<Template>
+	<ContentPresenter 
+		width="100%"
+		height="100%"
+		background="{control.background}"
+		borderWidth="{control.borderWidth}"
+		borderColor="{control.borderColor}"
+		content="{control.content}" 
+		contentTemplate="{control.contentTemplate}" 
+		contentTemplateSelector="{control.contentTemplateSelector}" />
+</Template>

@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<style>
+	</style>
+	<script type="text/javascript">
+		function registerEvent(target, eventType, eventHandler) {
+			if (target.addEventListener) {
+				target.addEventListener(eventType, eventHandler, false);
+			}
+			else if (target.attachEvent) {
+				target.attachEvent('on'+eventType, eventHandler);
+			}
+		};
+		function stringify(obj) {
+			var result = '';
+			for (var key in obj) {
+				var value = obj[key];
+				if (value && value.tagName) {
+					value = value.tagName + '#' + value.id;
+				}
+				result += '        ' + key + ': ' + value + ',<br>';
+			}
+			return result;
+		}
+	</script>
+</head>
+<body style="margin:0px;">
+	<div id="outer" style="margin:5px;border:1px solid black;padding:7px;width:300px;height:300px;overflow:auto">
+		<div id="inner" style="border:2px solid blue">
+			<span style="width:30px;height:20px">A</span><span id="inline" style="width:30px;height:20px">B</span>
+			<div style="width:500px;height:500px"></div>
+		</div>
+	</div>
+	<pre id="output" style="height:300px;overflow:auto">
+	</pre>
+	<script type="text/javascript">
+		(function() {
+			var outer = document.getElementById('outer'),
+				inner = document.getElementById('inner'),
+				inline = document.getElementById('inline'),
+				output = document.getElementById('output');
+
+			function dumpViewProperties(el) {
+				var result = '';
+				result += '    clientLeft = ' + el.clientLeft + '<br>';
+				result += '    clientTop = ' + el.clientTop + '<br>';
+				result += '    clientWidth = ' + el.clientWidth + '<br>';
+				result += '    clientHeight = ' + el.clientHeight + '<br>';
+
+				result += '    scrollLeft = ' + el.scrollLeft + '<br>';
+				result += '    scrollTop = ' + el.scrollTop + '<br>';
+				result += '    scrollWidth = ' + el.scrollWidth + '<br>';
+				result += '    scrollHeight = ' + el.scrollHeight + '<br>';
+
+				result += '    offsetLeft = ' + el.offsetLeft + '<br>';
+				result += '    offsetTop = ' + el.offsetTop + '<br>';
+				result += '    offsetWidth = ' + el.offsetWidth + '<br>';
+				result += '    offsetHeight = ' + el.offsetHeight + '<br>';
+
+				result += '    getBoundingClientRect()<br>';
+				var box = el.getBoundingClientRect && el.getBoundingClientRect();
+				result += stringify(box);
+
+				return result;
+			}
+
+			setInterval(function() {
+				var result = '';
+				result += 'screen:<br>';
+				result += '    width = ' + screen.width + '<br>';
+				result += '    height = ' + screen.height + '<br>';
+				result += 'window:<br>';
+				result += '    screenX = ' + window.screenX + '<br>';
+				result += '    screenY = ' + window.screenY + '<br>';
+				result += '    innerWidth = ' + window.innerWidth + '<br>';
+				result += '    innerHeight = ' + window.innerHeight + '<br>';
+				result += '    outerWidth = ' + window.outerWidth + '<br>';
+				result += '    outerHeight = ' + window.outerHeight + '<br>';
+				result += '    scrollX = ' + window.scrollX + '<br>';
+				result += '    scrollY = ' + window.scrollY + '<br>';
+				result += '    scrollMaxX = ' + window.scrollMaxX + '<br>';
+				result += '    scrollMaxY = ' + window.scrollMaxY + '<br>';
+				result += '    pageXOffset = ' + window.pageXOffset + '<br>';
+				result += '    pageYOffset = ' + window.pageYOffset + '<br>';
+				result += 'document.documentElement:<br>' + dumpViewProperties(document.documentElement);
+				result += 'document.body:<br>' + dumpViewProperties(document.body);
+				result += 'outer:<br>' + dumpViewProperties(outer);
+				result += 'inner:<br>' + dumpViewProperties(inner);
+				result += 'inline:<br>' + dumpViewProperties(inline);
+				output.innerHTML = result;
+			}, 100);
+		})();
+	</script>
+</body>
+</html>

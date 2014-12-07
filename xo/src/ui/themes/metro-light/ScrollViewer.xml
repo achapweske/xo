@@ -1,0 +1,50 @@
+<Style x:ref="ScrollViewer">
+	<Dictionary.definitions>
+		<Dictionary x:source="./definitions.xml" />
+	</Dictionary.definitions>
+	<Property name="foreground" value="@foregroundColor" />
+	<Property name="horizontalContentAlignment" value="left" />
+	<Property name="verticalContentAlignment" value="top" />
+	<Property name="verticalScrollBarVisibility" value="auto" />
+	<Property name="padding" value="0" />
+	<Property name="borderWidth" value="1" />
+	<Property name="template">
+		<Template>
+			<Grid x:name="border">
+				<Grid.rows>
+					<Row height="100%" />
+					<Row />
+				</Grid.rows>
+				<Grid.columns>
+					<Column width="100%" />
+					<Column />
+				</Grid.columns>
+				<ScrollContentPresenter 
+					x:name="parts.scrollContentPresenter" 
+					canContentScroll="{control.canContentScroll}" 
+					canHorizontallyScroll="false" 
+					canVerticallyScroll="false"
+					contentTemplate="{control.contentTemplate}"
+					content="{control.content}"
+					margin="{control.padding}" />
+				<ScrollBar 
+					x:name="parts.verticalScrollBar"
+					Grid.column="1"
+					cursor="arrow" 
+					minimum="0"
+					maximum="{control.scrollableHeight}"
+					value="{control.verticalOffset}"
+					viewportSize="{control.viewportHeight}"/>
+				<ScrollBar 
+					x:name="parts.horizontalScrollBar"
+					Grid.row="1"
+					orientation="horizontal"
+					cursor="arrow"
+					minimum="0"
+					maximum="{control.scrollableWidth}"
+					value="{control.horizontalOffset}"
+					viewportSize="{control.viewportWidth}" />
+			</Grid>
+		</Template>
+	</Property>
+</Style>

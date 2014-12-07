@@ -1,0 +1,42 @@
+<Style x:ref="ListBoxItem">
+	<Style.definitions>
+		<Dictionary x:source="./definitions.xml" />
+	</Style.definitions>
+	<Property name="foreground" value="@foregroundColor" />
+	<Property name="background" value="transparent" />
+	<Property name="fontSize" value="@contentFontSize" />
+	<Property name="fontFamily" value="@contentFontFamily" />
+	<Property name="width" value="100%" />
+	<Property name="minHeight" value="30" />
+	<Property name="padding" value="2 6" />
+	<Property name="margin" value="0" />
+	<Property name="verticalContentAlignment" value="middle" />
+	<Property name="borderWidth" value="1" />
+	<Property name="template">
+		<Template>
+			<Grid x:name="border" padding="{control.padding}" background="{control.background}"  >
+				<ContentPresenter 
+					x:name="content" 
+					foreground="{control.foreground}" 
+					verticalAlignment="{control.verticalContentAlignment}" 
+					horizontalAlignment="{control.horizontalContentAlignment}"
+					content="{control.content}" 
+					contentTemplate="{control.contentTemplate}" 
+					contentTemplateSelector="{control.contentTemplateSelector}" />
+			</Grid>
+			<StateManager.stateGroups>
+				<StateGroup x:name="state">
+					<State name="mouseOver" value="{control.isMouseOver}">
+						<Property target="{border}" name="background" value="@listBoxItemHoverBackgroundColor" />
+						<Property target="{border}" name="borderColor" value="@listBoxItemHoverBorderColor" />
+					</State>
+					<State name="selected" value="{control.isSelected}">
+						<Property target="{border}" name="background" value="@listBoxItemSelectedBackgroundColor" />
+						<Property target="{border}" name="borderColor" value="@listBoxItemSelectedBorderColor" />
+					</State>
+				</StateGroup>
+			</StateManager.stateGroups>			
+		</Template>
+	</Property>
+</Style>
+

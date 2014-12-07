@@ -1,0 +1,8 @@
+
+Size is determined by:
+-width and height
+-minWidth and minHeight
+-maxWidth and maxHeight
+
+width/height may be an absolute value, a percentage, or auto. Percentages are relative to the parent. If a percentage is given and the parent's size is auto, then the effective value for the child is auto. 
+

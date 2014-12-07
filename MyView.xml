@@ -1,0 +1,117 @@
+<?xml version="1.0"?>
+<Grid rowCount="1" xmlns:g="src/ui/graphics">
+	<Grid.definitions>
+		<Style x:ref="titleStyle">
+			<Property name="fontSize" value="24" />
+			<Property name="foreground" value="#00AADE" />
+			<Property name="margin" value="40 0 20" />
+			<Property name="horizontalAlignment" value="center" />
+		</Style>
+	</Grid.definitions>
+	<Grid.columns>
+		<Column width="200" />
+		<Column width="200" />
+		<Column />
+		<Column width="5" />
+		<Column background="lightgray" width="250" />
+	</Grid.columns>
+	<VerticalPanel width="200" padding="30">
+		<TextBlock style="@titleStyle">Button</TextBlock>
+		<Button x:name="button" horizontalAlignment="center" click="onClicked">Button
+		</Button>
+		<TextBlock style="@titleStyle">Label</TextBlock>
+		<Label horizontalAlignment="center">Label</Label>
+		<TextBlock style="@titleStyle">TextBlock</TextBlock>
+		<TextBlock horizontalAlignment="center">TextBlock</TextBlock>
+		<TextBlock style="@titleStyle">TextBox</TextBlock>
+		<TextBox horizontalAlignment="center">TextBox</TextBox>
+		<TextBlock style="@titleStyle">ToggleButton</TextBlock>
+		<ToggleButton x:name="toggleButton" horizontalAlignment="center" click="onToggle">ToggleButton</ToggleButton>
+	</VerticalPanel>
+	<VerticalPanel Grid.column="1" width="200" padding="30">
+		<TextBlock style="@titleStyle">RepeatButton</TextBlock>
+		<RepeatButton horizontalAlignment="center" click="onRepeat">RepeatButton</RepeatButton>
+		<TextBlock style="@titleStyle">ScrollViewer</TextBlock>
+		<ScrollViewer width="100" height="75" horizontalAlignment="center">
+			<VerticalPanel>
+				<TextBlock>This is a test 1</TextBlock>
+				<TextBlock>This is a test 2</TextBlock>
+				<TextBlock>This is a test 3</TextBlock>
+				<TextBlock x:name="label">This is a test 4</TextBlock>
+				<TextBlock>This is a test 5</TextBlock>
+				<TextBlock>This is a test 6</TextBlock>
+				<TextBlock>This is a test 7</TextBlock>
+				<TextBlock>This is a test 8</TextBlock>
+			</VerticalPanel>
+		</ScrollViewer>
+		<TextBlock style="@titleStyle">ListBox</TextBlock>
+		<ListBox width="100%" height="100">
+			<ListBoxItem>
+				<TextBlock>Testing...</TextBlock>
+			</ListBoxItem>
+			<String>This is a test</String>
+			<String>This is a test</String>
+			<String>This is a test</String>
+			<String>This is a test</String>
+		</ListBox>
+	</VerticalPanel>
+	<VerticalPanel Grid.column="2" width="200" padding="30">
+		<TextBlock style="@titleStyle">TabControl</TextBlock>
+		<TabControl height="200" width="200">
+			<TabItem header="Foo">
+				<TextBlock>Bar</TextBlock>
+			</TabItem>
+			<String>Test1</String>
+			<String>Test2</String>
+			<String>Test3</String>
+		</TabControl>
+		<TextBlock style="@titleStyle">CheckBox</TextBlock>
+		<CheckBox>Test!</CheckBox>
+		<TextBlock style="@titleStyle">RadioButton</TextBlock>
+		<RadioButton groupName="group1">Radio Button 1</RadioButton>
+		<RadioButton groupName="group1">Radio Button 2</RadioButton>
+		<RadioButton groupName="group1">Radio Button 3</RadioButton>
+	</VerticalPanel>
+	<GridSplitter Grid.column="3" height="100%" borderWidth="0 1" />
+	<VerticalPanel Grid.column="4" padding="20">
+		<HorizontalPanel>
+			<TextBlock text="isPressed" margin="0 10 0 0" verticalAlignment="middle" />
+			<TextBox text="{ button.isPressed }" />
+		</HorizontalPanel>
+		<HorizontalPanel margin="10 0 0 0">
+			<TextBlock text="isChecked" margin="0 10 0 0" verticalAlignment="middle" />
+			<TextBox text="{ toggleButton.isChecked }" />
+		</HorizontalPanel>
+	</VerticalPanel>
+</Grid>
+
+<!--
+<View color="black" background="gray">
+	<Grid margin="20" background="white">
+		<Grid.rows>
+			<Row height="100" />
+			<Row />
+		</Grid.rows>
+		<Grid.columns>
+			<Column x:name="firstColumn" width="100" />
+			<Column />
+		</Grid.columns>
+		<Block x:name="block1" Grid.row="0" Grid.column="0" background="red" foo="bar" />
+		<Button Grid.row="0" Grid.column="1" x:name="theButton" horizontalAlignment="left" verticalAlignment="center" margin="20" content="Foo bar!">
+			<Button.background>
+				<LinearGradient>
+					<LinearGradient.colorStops>
+						<ColorStop name="colorStop" color="red" />
+						<ColorStop color="blue" />
+					</LinearGradient.colorStops>
+				</LinearGradient>
+			</Button.background>
+			<Button.transitions>
+				<Transition property="background" duration="500ms" />
+			</Button.transitions>
+		</Button>
+		<TextBlock Grid.row="1" Grid.column="0" background="blue" text="This is a test" />
+		<TextBox x:name="textBox" Grid.row="1" Grid.column="1" background="gray" text="{block1.background}" />
+	</Grid>
+</View>
+-->

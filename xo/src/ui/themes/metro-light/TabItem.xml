@@ -1,0 +1,43 @@
+<Style x:ref="TabItem">
+	<Style.definitions>
+		<Dictionary x:source="./definitions.xml" />
+	</Style.definitions>
+	<Property name="background" value="@tabItemBackgroundColor" />
+	<Property name="borderColor" value="@tabItemBorderColor" />
+	<Property name="borderWidth" value="1" />
+	<Property name="fontSize" value="@controlFontSize" />
+	<Property name="fontFamily" value="@controlFontFamily" />
+	<Property name="minWidth" value="5" />
+	<Property name="minHeight" value="26" />
+	<Property name="padding" value="2 10" />
+	<Property name="margin" value="0" />
+	<Property name="horizontalContentAlignment" value="center" />
+	<Property name="verticalContentAlignment" value="middle" />
+	<Property name="template">
+		<Template>
+			<Grid x:name="border" padding="{control.padding}" background="{control.background}" borderColor="{control.borderColor}" borderWidth="{control.borderWidth}"  >
+				<ContentPresenter 
+					x:name="content" 
+					foreground="@tabItemTexForegroundColor" 
+					verticalAlignment="{control.verticalContentAlignment}" 
+					horizontalAlignment="{control.horizontalContentAlignment}"
+					content="{control.header}" 
+					contentTemplate="{control.headerTemplate}" 
+					contentTemplateSelector="{control.headerTemplateSelector}" />
+			</Grid>
+			<StateManager.stateGroups>
+				<StateGroup x:name="state">
+					<State name="mouseOver" value="{control.isMouseOver}">
+						<Property target="{content}" name="foreground" value="@lightForegroundColor" />
+					</State>
+					<State name="selected" value="{control.isSelected}">
+						<Property target="{border}" name="background" value="@tabItemSelectedBackgroundColor" />
+						<Property target="{border}" name="borderColor" value="@tabItemSelectedBorderColor" />
+						<Property target="{border}" name="borderWidth" value="1 1 0" />
+						<Property target="{content}" name="foreground" value="@tabItemTexSelectedForegroundColor" />
+					</State>
+				</StateGroup>
+			</StateManager.stateGroups>			
+		</Template>
+	</Property>
+</Style>

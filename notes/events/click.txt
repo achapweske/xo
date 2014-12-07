@@ -1,0 +1,944 @@
+{
+	moduleName: ...,
+	modulePath: ...,
+	module: ListBox,
+	properties: [
+	],
+	children: [
+	]
+}
+
+Application({
+	timeout: 500,
+	view: Grid({
+		rows: [
+			Row(),
+			Row()
+		],
+		children: [
+
+		]
+	})
+});
+
+=>
+
+{
+	constructor: Application,
+	timeout: 500,
+	view: {
+		constructor: Grid,
+		init: function() {
+			Grid.row.set(this, 1);
+		},
+		rows: [
+			{ constructor: Row },
+			{ constructor: Row }
+		],
+		children: [
+		]
+	}
+}
+
+recipe.inflate();
+
+
+Summary:
+
+1) Detects left clicks only
+2) Event type = e.type
+3) Clicked element = e.target || e.srcElement
+-How to associate a widget with a DOM element?
+4) Stop propagation: 
+
+	if (e.stopPropagation) e.stopPropagation();
+	else e.cancelBubble = true;
+
+5) Prevent default: 
+
+	if (e.preventDefault) e.preventDefault();
+	else e.returnValue = false;
+
+6) Screen coordinates = screenX, screenY
+7) Client coordinates = clientX, clientY
+-How to convert client coordinates to document coordinates?
+8) Is ctrl key pressed = ctrlKey
+9) Is shift key pressed = shiftKey
+10) Is alt key pressed = altKey
+
+
+W3C DOM Level 3 Events:
+
+Event interface constants, methods, and attributes:
+	NONE constant
+		O24, C37, FF32: 0
+		C14, FF7, S4-5, IE6-11: missing
+	CAPTURING_PHASE constant
+		O24, C14/37, S4-5, FF7/32, IE9-11: 1
+		IE6-8: missing
+	AT_TARGET constant
+		O24, C14/37, S4-5, FF7/32, IE9-11: 2
+		IE6-8: missing
+	BUBBLING_PHASE constant
+		O24, C14/37, S4-5, FF7/32, IE9-11: 3
+		IE6-8: missing
+	type attribute
+		O24, C14/37, S4-5, FF7/32, IE6-11: 'click'
+	target attribute
+		O24, C14/37, S4-5, FF7/32, IE9-11: element that was clicked
+		IE6-8: missing
+	srcElement (non-standard)
+		O24, C14/37, S4-5, IE6-11: element that was clicked
+		FF7: missing
+	currentTarget attribute
+		O24, C14/37, S4-5, FF7/32, IE9-11: element on which event handler was registered
+		IE6-8: missing
+	fromElement (non-standard)
+		O24, C14/37, S4-5, IE6-11: null
+		FF7/32: missing
+	toElement (non-standard)
+		O24, C14/37, S4-5: element that was clicked
+		FF7/32: missing
+		IE6-11: null
+	eventPhase attribute
+		O24, C14/37, S4-5, FF7/32, IE9-11: 3 (when bubbling)
+		IE6-8: missing
+	bubbles attribute
+		O24, C14/37, S4-5, FF7/32, IE9-11: true
+		IE6-8: missing
+	cancelable attribute
+		O24, C14/37, S4-5, FF7/32, IE9-11: true
+		IE6-8: missing
+	timeStamp attribute
+		FF7/32: 6/7-digit number
+		O24, C14/37, S4-5, IE9-11: 13-digit number
+		IE6-8: missing
+*IE11 additionally has an hwTimestamp property = hardware timestamp in microseconds
+	defaultPrevented attribute
+		O24, C14/37, S5, FF7/32, IE9-11: false
+		S4, IE6-8: missing
+	isTrusted attribute
+		FF7/32, IE9-11: true
+		O24, C14/37, S4-5, IE6-8: missing
+	stopPropagation() method
+		O24, C14/37, S4-5, FF7/32, IE9-11: tested/ok
+		IE6-8: missing
+		O24, C14/37, S4-5, FF7/32, IE6-11: setting cancelBubble=true stops propagation
+	stopImmediatePropagation() method
+		O24, C14/37, S5, FF32, IE9-11: present
+		S5, FF7, IE6-8: missing
+	preventDefault() method
+		FF7, O24, C14/37, S4-5, FF32, IE9-11: tested/ok
+		IE6-8: missing
+	returnValue (non-standard)
+		FF7/32, IE9-11: not supported
+		O24, C14/37, S4-5, IE6-8: tested/ok (for IE6-8, returning false also prevents default action)
+	initEvent() method
+		O24, C14/37, S4-5, FF7/32, IE9-11: present
+		IE6-8: missing
+
+interface UIEvent : Event {
+    readonly    attribute WindowProxy? view;
+    	O24, C14/37, S4-5, FF7/32, IE9-11: present
+    	IE6-8: missing
+    readonly    attribute long         detail;
+    	IE11: always 0
+    	O24, C14/37, S4-5, FF7/32, IE9-10: click count (1=single click, 2=double click, etc.) 
+    		*FF7/32 only supports values up to 3 (1, 2, 3, 2, 3, 2, 3, ...)
+    	IE6-8: missing
+};
+
+interface MouseEvent : UIEvent {
+    readonly    attribute long           screenX;
+    	O24, C14/37, S4-5, FF7/32, IE6-11: position relative to screen
+    readonly    attribute long           screenY;
+    	O24, C14/37, S4-5, FF7/32, IE6-11: position relative to screen
+    readonly    attribute long           clientX;
+    	O24, C14/37, S4-5, FF7/32, IE6-10: position relative to viewport
+    readonly    attribute long           clientY;
+    	O24, C14/37, S4-5, FF7/32, IE6-10: position relative to viewport
+    pageX/pageY (non-standard)
+		O24, C14/37, S4-5, FF7/32, IE9-11: position relative to document
+		IE6-8: missing
+	x/y (non-standard)
+		O24, C14/37, S4-5, IE6-7, IE9-11: position relative to viewport
+		IE8: position relative to document
+		FF7: missing
+    readonly    attribute boolean        ctrlKey;
+    	O24, C14/37, S4-5, FF7/32, IE6-11: true iff either ctrl key is pressed
+    readonly    attribute boolean        shiftKey;
+    	O24, C14/37, S4-5, FF7/32, IE6-11: true iff either shift key is pressed
+    readonly    attribute boolean        altKey;
+    	O24, C14/37, S4-5, FF7/32, IE6-11: true iff either alt key is pressed 
+    		*O24, IE7, IE10-11: pressing alt activates menus, shifting focus away from the document
+    readonly    attribute boolean        metaKey;
+    	S4-5: true iff either *alt* key is pressed
+    	O24, C14/37, FF7/32, IE9-11: present but always false
+    	IE6-8: missing
+    readonly    attribute short          button;
+    	O24, C14/37, S4-5, FF7/32, IE6-11: 0 (click event is only invoked for left mouse button)
+    which (non-standard)
+		O24, C14/37, S4-5, FF7/32, IE9-11: 1
+		IE6-8: missing
+    readonly    attribute EventTarget?   relatedTarget;
+    	O24, C14/37, S4-5, FF7/32, IE9-10: null
+    	IE6-8: missing
+    // Introduced in DOM Level 3
+    readonly    attribute unsigned short buttons;
+    	FF32, IE9-11: 0 (click event is only invoked for left mouse button)
+    	O24, C14/37, S4-5, FF7, IE6-8: missing
+    boolean getModifierState (DOMString keyArg);
+    	FF32, IE9-11: present
+    	O24, C14/37, S4-5, FF7, IE6-8: missing
+*FF32 additionally contains rangeOffset and rangeParent which indicate the offset of the character clicked and its container
+};
+
+Chrome 14:
+
+layerX: 33,
+y: 53,
+returnValue: true,
+clientX: 33,
+which: 1,
+shiftKey: false,
+currentTarget: DIV#clickContainer,
+timeStamp: 1412973808632,
+eventPhase: 3,
+cancelable: true,
+bubbles: true,
+screenX: 33,
+x: 33,
+button: 0,
+defaultPrevented: false,
+altKey: false,
+keyCode: 0,
+offsetY: 7,
+clientY: 53,
+view: [object DOMWindow],
+fromElement: null,
+ctrlKey: false,
+target: SPAN#clickTarget,
+layerY: 53,
+charCode: 0,
+type: click,
+pageX: 33,
+cancelBubble: false,
+pageY: 53,
+clipboardData: undefined,
+metaKey: false,
+srcElement: SPAN#clickTarget,
+toElement: SPAN#clickTarget,
+detail: 1,
+offsetX: 25,
+relatedTarget: null,
+screenY: 114,
+dataTransfer: null,
+initMouseEvent: function initMouseEvent() {},
+initUIEvent: function initUIEvent() {},
+stopPropagation: function stopPropagation() {},
+preventDefault: function preventDefault() {},
+initEvent: function initEvent() {},
+stopImmediatePropagation: function stopImmediatePropagation() {},
+CAPTURING_PHASE: 1,
+AT_TARGET: 2,
+BUBBLING_PHASE: 3,
+...
+more constants
+
+
+Opera 24:
+
+dataTransfer: null,
+toElement: SPAN#clickTarget,
+fromElement: null,
+y: 55,
+x: 35,
+offsetY: 8,
+offsetX: 27,
+webkitMovementY: 0,
+webkitMovementX: 0,
+movementY: 0,
+movementX: 0,
+relatedTarget: null,
+button: 0,
+metaKey: false,
+altKey: false,
+shiftKey: false,
+ctrlKey: false,
+clientY: 55,
+clientX: 35,
+screenY: 123,
+screenX: 35,
+which: 1,
+pageY: 55,
+pageX: 35,
+layerY: 55,
+layerX: 35,
+charCode: 0,
+keyCode: 0,
+detail: 1,
+view: [object Window],
+clipboardData: undefined,
+path: [object NodeList],
+cancelBubble: false,
+returnValue: true,
+srcElement: SPAN#clickTarget,
+defaultPrevented: false,
+timeStamp: 1412970619672,
+cancelable: true,
+bubbles: true,
+eventPhase: 3,
+currentTarget: DIV#clickContainer,
+target: SPAN#clickTarget,
+type: click,
+initMouseEvent: function initMouseEvent() { [native code] },
+initUIEvent: function initUIEvent() { [native code] },
+stopPropagation: function stopPropagation() { [native code] },
+preventDefault: function preventDefault() { [native code] },
+initEvent: function initEvent() { [native code] },
+stopImmediatePropagation: function stopImmediatePropagation() { [native code] },
+NONE: 0,
+CAPTURING_PHASE: 1,
+AT_TARGET: 2,
+BUBBLING_PHASE: 3,
+MOUSEDOWN: 1,
+MOUSEUP: 2,
+MOUSEOVER: 4,
+MOUSEOUT: 8,
+MOUSEMOVE: 16,
+MOUSEDRAG: 32,
+CLICK: 64,
+DBLCLICK: 128,
+KEYDOWN: 256,
+KEYUP: 512,
+KEYPRESS: 1024,
+DRAGDROP: 2048,
+FOCUS: 4096,
+BLUR: 8192,
+SELECT: 16384,
+CHANGE: 32768,
+
+
+Chrome 37:
+
+dataTransfer: null,
+toElement: SPAN#clickTarget,
+fromElement: null,
+y: 58,
+x: 36,
+offsetY: 11,
+offsetX: 28,
+webkitMovementY: 0,
+webkitMovementX: 0,
+movementY: 0,
+movementX: 0,
+relatedTarget: null,
+button: 0,
+metaKey: false,
+altKey: false,
+shiftKey: false,
+ctrlKey: false,
+clientY: 58,
+clientX: 36,
+screenY: 119,
+screenX: 36,
+which: 1,
+pageY: 58,
+pageX: 36,
+layerY: 58,
+layerX: 36,
+charCode: 0,
+keyCode: 0,
+detail: 1,
+view: [object Window],
+clipboardData: undefined,
+path: [object NodeList],
+cancelBubble: false,
+returnValue: true,
+srcElement: SPAN#clickTarget,
+defaultPrevented: false,
+timeStamp: 1412970007019,
+cancelable: true,
+bubbles: true,
+eventPhase: 3,
+currentTarget: DIV#clickContainer,
+target: SPAN#clickTarget,
+type: click,
+initMouseEvent: function initMouseEvent() { [native code] },
+initUIEvent: function initUIEvent() { [native code] },
+stopPropagation: function stopPropagation() { [native code] },
+preventDefault: function preventDefault() { [native code] },
+initEvent: function initEvent() { [native code] },
+stopImmediatePropagation: function stopImmediatePropagation() { [native code] },
+NONE: 0,
+CAPTURING_PHASE: 1,
+AT_TARGET: 2,
+BUBBLING_PHASE: 3,
+MOUSEDOWN: 1,
+MOUSEUP: 2,
+MOUSEOVER: 4,
+MOUSEOUT: 8,
+MOUSEMOVE: 16,
+MOUSEDRAG: 32,
+CLICK: 64,
+DBLCLICK: 128,
+KEYDOWN: 256,
+KEYUP: 512,
+KEYPRESS: 1024,
+DRAGDROP: 2048,
+FOCUS: 4096,
+BLUR: 8192,
+SELECT: 16384,
+CHANGE: 32768,
+
+
+Safari 5.0:
+
+shiftKey: false,
+toElement: SPAN#clickTarget,
+clientY: 57,
+y: 57,
+x: 35,
+ctrlKey: false,
+relatedTarget: null,
+clientX: 35,
+screenY: 116,
+metaKey: false,
+offsetX: 27,
+altKey: false,
+offsetY: 11,
+fromElement: null,
+screenX: 35,
+dataTransfer: null,
+button: 0,
+pageY: 57,
+layerY: 57,
+pageX: 35,
+charCode: 0,
+view: [object DOMWindow],
+which: 1,
+keyCode: 0,
+detail: 1,
+layerX: 35,
+returnValue: true,
+timeStamp: 1412968626146,
+eventPhase: 3,
+target: SPAN#clickTarget,
+defaultPrevented: false,
+srcElement: SPAN#clickTarget,
+type: click,
+clipboardData: undefined,
+cancelable: true,
+currentTarget: DIV#clickContainer,
+bubbles: true,
+cancelBubble: false,
+initMouseEvent: function initMouseEvent() { [native code] },
+initUIEvent: function initUIEvent() { [native code] },
+MOUSEOUT: 8,
+preventDefault: function preventDefault() { [native code] },
+FOCUS: 4096,
+CHANGE: 32768,
+initEvent: function initEvent() { [native code] },
+MOUSEMOVE: 16,
+AT_TARGET: 2,
+stopPropagation: function stopPropagation() { [native code] },
+SELECT: 16384,
+BLUR: 8192,
+KEYUP: 512,
+MOUSEDOWN: 1,
+MOUSEDRAG: 32,
+BUBBLING_PHASE: 3,
+MOUSEUP: 2,
+CAPTURING_PHASE: 1,
+MOUSEOVER: 4,
+CLICK: 64,
+DBLCLICK: 128,
+KEYDOWN: 256,
+KEYPRESS: 1024,
+DRAGDROP: 2048,
+stopImmediatePropagation: function stopImmediatePropagation() { [native code] },
+
+Safari 4.0:
+
+shiftKey: false,
+toElement: SPAN#clickTarget,
+clientY: 48,
+y: 48,
+x: 35,
+ctrlKey: false,
+relatedTarget: null,
+clientX: 35,
+screenY: 107,
+metaKey: false,
+offsetX: 27,
+altKey: false,
+offsetY: 2,
+fromElement: null,
+screenX: 35,
+dataTransfer: null,
+button: 0,
+pageY: 48,
+layerY: 48,
+pageX: 35,
+charCode: 0,
+view: [object DOMWindow],
+which: 1,
+keyCode: 0,
+detail: 1
+layerX: 35,
+returnValue: true,
+timeStamp: 1412972918345,
+eventPhase: 3,
+target: SPAN#clickTarget,
+srcElement: SPAN#clicKTarget,
+type: click,
+clipboardData: undefined,
+cancelable: true,
+currentTarget: DIV#clickContainer,
+bubbles: true,
+cancelBubble: false,
+initMouseEvent: function () {},
+initUIEVent: function () {},
+MOUSEOUT: 8,
+preventDefault: function () {},
+FOCUS: 4096,
+CHANGE: 32768,
+initEvent: function initEvent() {},
+MOUsEMOVE: 16,
+AT_TARGET: 2,
+stopPropagation: function stopPropagation() {},
+SELECT: 16384,
+BLUR: 8192,
+KEYUP: 512,
+MOUSEDOWN: 1,
+MOUSEDRAG: 32,
+...
+more constants
+
+
+
+FF32:
+
+isTrusted: true,
+initMouseEvent: function initMouseEvent() { [native code] },
+getModifierState: function getModifierState() { [native code] },
+initNSMouseEvent: function initNSMouseEvent() { [native code] },
+screenX: 34,
+screenY: 163,
+clientX: 34,
+clientY: 58,
+ctrlKey: false,
+shiftKey: false,
+altKey: false,
+metaKey: false,
+button: 0,
+buttons: 0,
+relatedTarget: null,
+region: ,
+mozMovementX: 34,
+mozMovementY: 171,
+mozPressure: 0,
+mozInputSource: 1,
+MOZ_SOURCE_UNKNOWN: 0,
+MOZ_SOURCE_MOUSE: 1,
+MOZ_SOURCE_PEN: 2,
+MOZ_SOURCE_ERASER: 3,
+MOZ_SOURCE_CURSOR: 4,
+MOZ_SOURCE_TOUCH: 5,
+MOZ_SOURCE_KEYBOARD: 6,
+initUIEvent: function initUIEvent() { [native code] },
+view: [object Window],
+detail: 1,
+layerX: 34,
+layerY: 58,
+pageX: 34,
+pageY: 58,
+which: 1,
+rangeParent: [object Text],
+rangeOffset: 7,
+cancelBubble: false,
+isChar: false,
+SCROLL_PAGE_UP: -32768,
+SCROLL_PAGE_DOWN: 32768,
+stopPropagation: function stopPropagation() { [native code] },
+stopImmediatePropagation: function stopImmediatePropagation() { [native code] },
+preventDefault: function preventDefault() { [native code] },
+initEvent: function initEvent() { [native code] },
+getPreventDefault: function getPreventDefault() { [native code] },
+type: click,
+target: SPAN#clickTarget,
+currentTarget: DIV#clickContainer,
+eventPhase: 3,
+bubbles: true,
+cancelable: true,
+defaultPrevented: false,
+timeStamp: 1150554,
+originalTarget: SPAN#clickTarget,
+explicitOriginalTarget: [object Text],
+NONE: 0,
+CAPTURING_PHASE: 1,
+AT_TARGET: 2,
+BUBBLING_PHASE: 3,
+ALT_MASK: 1,
+CONTROL_MASK: 2,
+SHIFT_MASK: 4,
+META_MASK: 8,
+
+
+FF 7:
+
+originalTarget: SPAN#clickTarget,
+getPreventDefault: function getPreventDefault() { [native code ]},
+type: click,
+target: SPAN#clickTarget,
+currentTarget: DIV#clickContainer,
+eventPhase: 3,
+bubbles: true,
+timeStamp: 218151,
+defaultPrevented: false,
+stopPropagation: function stopPropagation() { [native code] },
+preventDefault: function preventDefault() { [native code] },
+initEvent: function initEvent() { [native code ]},
+which: 1,
+rangeParent: [object Text],
+rangeOffset: 8,
+pageX: 44,
+pageY: 47,
+isChar: false,
+screenX: 44,
+screenY: 157,
+clientX: 44,
+clientY: 47,
+ctrlKey: false,
+shiftKey: false,
+altKey: false,
+metaKey: false,
+button: 0,
+relatedTarget: null,
+initMouseEvent: function initMouseEvent() { [native code] },
+view: [object Window],
+detail: 1,
+initUIEvent: function initUIEvent() { [native code ]},
+CAPTURING_PHASE: 1,
+AT_TARGET: 2,
+BUBBLING_PHASE: 3,
+mozPressure: 0,
+mozInputSource: 1,
+initNSMouseEvent: function initNSMouseEvent() { [native code ]},
+MOZ_SOURCE_UNKNOWN: 0,
+MOZ_SOURCE_MOUSE: 1,
+MOZ_SOURCE_PEN: 2,
+MOZ_SOURCE_ERASER: 3,
+MOZ_SOURCE_TOUCH: 5,
+MOZ_SOURCE_KEYBOARD: 6,
+explicitOriginalTarget: SPAN#clickTarget,
+preventBubble: function preventBubble() { [native code ]},
+preventCapture: function preventCapture() { [native code ]},
+isTrusted: true,
+layerX: 44,
+layerY: 47,
+cancelBubble: false,
+MOUSEDOWN: 1,
+MOUSEUP: 2,
+MOUSEOVER: 4,
+MOUsEOUT: 8,
+MOUSEMOVE: 16,
+MOUSEDRAG: 32,
+CLICK: 64,
+DBLCLICK: 128,
+KEYDOWN: 256,
+KEYUP: 512,
+...
+more constants
+
+
+IE11:
+
+height: 1,
+hwTimestamp: 1361202000,
+isPrimary: true,
+pointerId: 1,
+pointerType: mouse,
+pressure: 0,
+rotation: 0,
+tiltX: 0,
+tiltY: 0,
+width: 1,
+initPointerEvent: function initPointerEvent() { [native code] },
+altKey: false,
+button: 0,
+buttons: 0,
+clientX: 32,
+clientY: 44,
+ctrlKey: false,
+fromElement: null,
+layerX: 32,
+layerY: 44,
+metaKey: false,
+offsetX: 24,
+offsetY: -0.9599999785423279,
+pageX: 32,
+pageY: 44,
+relatedTarget: null,
+screenX: 32,
+screenY: 128,
+shiftKey: false,
+toElement: null,
+which: 1,
+x: 32,
+y: 44,
+getModifierState: function getModifierState() { [native code] },
+initMouseEvent: function initMouseEvent() { [native code] },
+detail: 0,
+view: [object Window],
+initUIEvent: function initUIEvent() { [native code] },
+bubbles: true,
+cancelBubble: false,
+cancelable: true,
+currentTarget: DIV#clickContainer,
+defaultPrevented: false,
+eventPhase: 3,
+isTrusted: true,
+srcElement: SPAN#clickTarget,
+target: SPAN#clickTarget,
+timeStamp: 1412966048986,
+type: click,
+initEvent: function initEvent() { [native code] },
+preventDefault: function preventDefault() { [native code] },
+stopImmediatePropagation: function stopImmediatePropagation() { [native code] },
+stopPropagation: function stopPropagation() { [native code] },
+AT_TARGET: 2,
+BUBBLING_PHASE: 3,
+CAPTURING_PHASE: 1,
+
+ 
+
+IE10:
+
+fromElement: null,
+layerX: 47,
+layerY: 41,
+toElement: null,
+which: 1,
+altKey: false,
+button: 0,
+buttons: 0,
+clientX: 47,
+clientY: 41,
+ctrlKey: false,
+metaKey: false,
+offsetX: 39,
+offsetY: -3.9599997997283935,
+pageX: 47,
+pageY: 41,
+relatedTarget: null,
+screenX: 47,
+screenY: 125,
+shiftKey: false,
+x: 47,
+y: 41,
+getModifierState: function getModifierState() { [native code]},
+initMouseEvent: function initMouseEvent() { [native code]},
+detail: 1,
+view: [object Window],
+initUIEvent: function initUIEvent() { [native code]},
+bubbles: true,
+cancelable: true,
+currentTarget: DIV#clickContainer,
+defaultPrevented: false,
+eventPhase: 3,
+isTrusted: true,
+target: SPAN#clickTarget,
+timeStamp: 1412964965149,
+type: click,
+cancelBubble: false,
+srcElement: SPAN#clickTarget,
+initEvent: function initEvent() { [native code]},
+preventDefault: function preventDefault() { [native code]},
+stopImmediatePropagation: function stopImmediatePropagation() { [native code]},
+stopPropagation: function stopPropagation() { [native code]},
+AT_TARGET: 2,
+BUBBLING_PHASE: 3,
+CAPTURING_PHASE: 1,
+
+
+
+IE9:
+
+fromElement: null,
+layerX: 32,
+layerY: 50,
+toElement: null,
+which: 1,
+altKey: false,
+button: 0,
+buttons: 0,
+clientX: 32,
+clientY: 50,
+ctrlKey: false,
+metaKey: false,
+offsetX: 24,
+offsetY: 5,
+pageX: 32,
+pageY: 50,
+relatedTarget: null,
+screenX: 32,
+screenY: 134,
+shiftKey: false,
+x: 32,
+y: 50,
+getModifierState: function getModifierState() { [native code] },
+initMouseEvent: function initMouseEvent() { [native code] },
+detail: 1,
+view: [object Window],
+initUIEvent: function initUIEvent() { [native code] },
+bubbles: true,
+cancelable: true,
+currentTarget: DIV#clickContainer,
+defaultPrevented: false,
+eventPhase: 3,
+isTrusted: true,
+target: SPAN#clickTarget,
+timeStamp: 1412893462418,
+type: click,
+cancelBubble: false,
+srcElement: SPAN#clickTarget,
+initEvent: function initEvent() { [native code] },
+preventDefault: function preventDefault() { [native code] },
+stopImmediatePropagation: function stopImmediatePropagation() { [native code] },
+stopPropagation: function stopPropagation() { [native code] },
+AT_TARGET: 2,
+BUBBLING_PHASE: 3,
+CAPTURING_PHASE: 1,
+
+IE8:
+
+recordset: null,
+type: click,
+fromElement: null,
+toElement: null,
+altLeft: false,
+keyCode: 0,
+repeat: false,
+reason: 0,
+data: ,
+behaviorCookie: 0,
+source: null,
+contentOverflow: false,
+behaviorPart: 0,
+url: ,
+dataTransfer: null,
+ctrlKey: false,
+shiftLeft: false, (set when *either* shift key is pressed)
+dataFld: ,
+returnValue: undefined,
+qualifier: ,
+wheelDelta: 0,
+bookmarks: null,
+button: 0,
+srcFilter: null,
+nextPage: ,
+cancelBubble: false,
+x: 34,	(position relative to document)
+y: 49,	(position relative to document)
+srcElement: SPAN#clickTarget,
+screenX: 36,
+screenY: 195,
+srcUrn: ,
+origin: ,
+boundElements: [object HTMLCollection],
+clientX: 34, (position relative to viewport)
+clientY: 49, (position relative to viewport)
+propertyName: ,
+shiftKey: false,
+ctrlLeft: false, (set when *either* ctrl key is pressed)
+offsetX: 36,
+offsetY: 51,
+altKey: false,
+
+
+IE7: 
+
+recordset: null,
+type: click,
+fromElement: null,
+toElement: null,
+altLeft: false,
+keyCode: 0,
+repeat: false,
+reason: 0,
+behaviorCookie: 0,
+contentOverflow: false,
+behaviorPart: 0,
+dataTransfer: null,
+ctrlKey: false,
+shiftLeft: false,
+dataFld: ,
+returnValue: undefined,
+qualifier: ,
+wheelDelta: 0,
+bookmarks: null,
+button: 0,
+srcFilter: null,
+nextPage: ,
+cancelBubble: false,
+x: 37,	(position relative to viewport)
+y: 62,	(position relative to viewport)
+srcElement: SPAN#clickTarget,
+screenX: 37,
+screenY: 181,
+srcUrn: ,
+boundElements: [object],
+clientX: 37,
+clientY: 62,
+propertyName: ,
+shiftKey: false,
+ctrlLeft: false,
+offsetX: 25,	(offset relative to parent element)
+offsetY: 45,	(offset relative to parent element)
+altKey: false,
+
+
+IE6:
+
+recordset: null,
+type: click,
+fromElement: null,
+toElement: null,
+altLeft: false,
+keyCode: 0,
+repeat: false,
+reason: 0,
+behaviorCookie: 0,
+contentOverflow: false,
+behaviorPart: 0,
+dataTransfer: null,
+ctrlKey: false,
+shiftLeft: false,
+dataFld: ,
+returnValue: undefined,
+qualifier: ,
+wheelDelta: 0,
+bookmarks: null,
+button: 0,
+srcFilter: null,
+nextPage: ,
+cancelBubble: false,
+x: 37,
+y: 55,
+srcElement: SPAN#clickTarget,
+screenX: 37,
+screenY: 159,
+srcUrn: ,
+boundElements: [object],
+clientX: 37,
+clientY: 55,
+propertyName: ,
+shiftKey: false,
+ctrlLeft: false,
+offsetX: 25,
+offsetY: 38,
+altKey: false,
+
+
+

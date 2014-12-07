@@ -1,0 +1,42 @@
+<Style x:ref="ToggleButton">
+	<Dictionary.definitions>
+		<Dictionary x:source="./definitions.xml" />
+	</Dictionary.definitions>
+	<Property name="foreground" value="@foregroundColor" />
+	<Property name="fontSize" value="14.667" />
+	<Property name="fontFamily" value="Segoe UI, sans-serif" />
+	<Property name="padding" value="0 10 2 10" />
+	<Property name="minWidth" value="30" />
+	<Property name="minHeight" value="30" />
+	<Property name="template">
+		<Template>
+			<Grid x:name="border" rowCount="1" columnCount="1" background="@buttonBackgroundColor" borderColor="@buttonBorderColor" borderWidth="1" borderRadius="2">
+				<ContentPresenter 
+					margin="{control.padding}" 
+					horizontalAlignment="{control.horizontalContentAlignment}" 
+					verticalAlignment="{control.verticalContentAlignment}" 
+					content="{control.content}" 
+					contentTemplate="{control.contentTemplate}" 
+					contentTemplateSelector="{control.contentTemplateSelector}" />
+			</Grid>
+			<StateManager.stateGroups>
+				<StateGroup x:name="state">
+					<State name="mouseOver" value="{control.isMouseOver}">
+						<Property target="{border}" name="background" value="@buttonHoverBackgroundColor" />
+						<Property target="{border}" name="borderColor" value="@buttonHoverBorderColor" />
+					</State>
+					<State name="pressed" value="{control.isPressed}">
+						<Property target="{border}" name="background" value="@buttonPressedBackgroundColor" />
+						<Property target="{border}" name="borderColor" value="@buttonPressedBorderColor" />
+						<Property target="{border}" name="foreground" value="@lightForegroundColor" />
+					</State>
+					<State name="checked" value="{control.isChecked}">
+						<Property target="{border}" name="background" value="@buttonPressedBackgroundColor" />
+						<Property target="{border}" name="borderColor" value="@buttonPressedBorderColor" />
+						<Property target="{border}" name="foreground" value="@lightForegroundColor" />
+					</State>
+				</StateGroup>
+			</StateManager.stateGroups>			
+		</Template>
+	</Property>
+</Style>

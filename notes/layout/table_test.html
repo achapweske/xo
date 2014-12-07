@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Element Properties</title>
+	<style>
+		label {
+			display: block;
+		}
+		#wrapper {
+			border: 1px solid blue;
+			margin-top:20px;
+		}
+		#wrapper table {
+			margin:20px;
+			border: 1px solid #ddd;
+			border-collapse: collapse;
+		}
+		#wrapper table th,
+		#wrapper table td {
+			border: 1px solid #ccc;
+		}
+		#container {
+			height:100px;
+		}
+		#container tr {
+			height:50%;
+		}
+		#child {
+			height:50%;
+			background: #eee;
+		}
+	</style>
+</head>
+<body>
+	<h3>Single Cell</h3>
+
+	<form style="display:inline-block">
+		<fieldset>
+			<legend>container</legend>
+			<table id="container-settings">
+				<tr>
+					<td>width</td> 
+					<td><input type="text" /></td>
+				</tr>
+				<tr>
+					<td>height</td>
+					<td><input type="text" /></td>
+				</tr>
+				<tr>
+					<td>min-width</td>
+					<td><input type="text" /></td>
+				</tr>
+				<tr>
+					<td>min-height</td>
+					<td><input type="text" /></td>
+				</tr>
+				<tr>
+					<td>max-width</td>
+					<td><input type="text" /></td>
+				</tr>
+				<tr>
+					<td>max-height</td>
+					<td><input type="text" /></td>
+				</tr>
+				<tr>
+					<td>margin</td>
+					<td><input type="text" /></td>
+				</tr>
+				<tr>
+					<td>padding</td>
+					<td><input type="text" /></td>
+				</tr>
+				<tr>
+					<td>border</td>
+					<td><input type="text" /></td>
+				</tr>
+			</table>
+		</fieldset>
+	</form>
+
+	<form style="display:inline-block">
+		<fieldset>
+			<legend>child</legend>
+			<table id="child-settings">
+				<tr>
+					<td>width</td> 
+					<td><input type="text" /></td>
+				</tr>
+				<tr>
+					<td>height</td>
+					<td><input type="text" /></td>
+				</tr>
+				<tr>
+					<td>min-width</td>
+					<td><input type="text" /></td>
+				</tr>
+				<tr>
+					<td>min-height</td>
+					<td><input type="text" /></td>
+				</tr>
+				<tr>
+					<td>max-width</td>
+					<td><input type="text" /></td>
+				</tr>
+				<tr>
+					<td>max-height</td>
+					<td><input type="text" /></td>
+				</tr>
+				<tr>
+					<td>margin</td>
+					<td><input type="text" /></td>
+				</tr>
+				<tr>
+					<td>padding</td>
+					<td><input type="text" /></td>
+				</tr>
+				<tr>
+					<td>border</td>
+					<td><input type="text" /></td>
+				</tr>
+			</table>
+		</fieldset>
+	</form>
+
+	<div id="wrapper">
+		<table id="container">
+			<tbody>
+				<tr>
+					<td>
+						<div id="child">This is a test!</div>
+					</td>
+				</tr>
+			</tbody>
+		</table>
+	<div>
+
+	<script type="text/javascript">
+
+		var vendorNamePrefixes = [ "Webkit", "O", "Moz", "ms" ];
+
+		function detectPropertyName(style, name) {
+			// Force lowerCamelCase below for microsoft prefix
+			name = name.replace(/^-ms-/, "ms-");
+
+			// Convert dash-separated-name to CamelCase
+			name = name.replace(/-([\da-z])/gi, function(match, p1) {
+				return p1.toUpperCase();
+			});
+
+			// See if property with given name exists
+			if (name in style) {
+				return name;
+			}
+
+			// If not, try name with vendor prefixes
+			var rootName = name[0].toUpperCase() + name.slice(1);
+			for (var i = 0; i < vendorNamePrefixes.length; i++) {
+				var vendorName = vendorNamePrefixes[i] + rootName;
+				if (vendorName in style) {
+					return vendorName;
+				}
+			}
+
+			return name;
+		};
+
+		var settings = {
+			init: function(id) {
+				var table = document.getElementById(id + '-settings');
+				for (var i = 0; i < table.rows.length; i++) {
+					var row = table.rows[i],
+						name = row.cells[0].innerHTML,
+						input = row.cells[1].firstChild;
+					this.register(id, name, input);
+				}
+			},
+			register: function(id, name, input) {
+				input.onkeyup = function() {
+					var style = document.getElementById(id).style;
+					name = detectPropertyName(style, name);
+					style[name] = input.value;
+				}
+			}
+		};
+
+		settings.init('container');
+		settings.init('child');
+
+	</script>
+</body>
+</html>
