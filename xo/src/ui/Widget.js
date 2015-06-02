@@ -32,7 +32,7 @@ define(['xo', './Visual', './Dictionary', './Style', './Transform', './KeyEventA
 	Widget.prototype._defaultStyle = xo.property({
 		get: function() {
 			var defaultStyleKey = this.defaultStyleKey();
-			return defaultStyleKey && this.definitions().find(defaultStyleKey) || undefined;
+			return defaultStyleKey && Dictionary.findDefinition(this, defaultStyleKey) || undefined;
 		}
 	});
 

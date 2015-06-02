@@ -1,7 +1,6 @@
 define(['./Utils', './Object', './ObjectTree', './Property', './AttachedProperty', './Event', './EventTracker', './ObservableList'], function (Utils, Object, ObjectTree, Property, AttachedProperty, Event, EventTracker, ObservableList) {
 	var Dictionary = Object.extend({
-		construct: function Dictionary(owner) {
-			this._owner = owner;
+		construct: function Dictionary() {
 			this._definitions = {};
 			this._children = new ObservableList();
 		},
@@ -54,55 +53,69 @@ define(['./Utils', './Object', './ObjectTree', './Property', './AttachedProperty
 					return result;
 				}
 			}
-
-			var parent = this._getParent();
-			return parent && parent.find(name);
+			return undefined;
 		},
 
 		assign: function(other) {
-			var collection = {},
-				children = [];
+			var definitions, children;
 
-			if (!Array.isArray(other)) {
+			if (Dictionary.ref.get(other) || other instanceof Dictionary) {
 				other = [ other ];
 			}
-			for (var i = 0; i < other.length; i++) {
-				var value = other[i];
-				if (value instanceof Dictionary) {
-					children.push(value);
-				}
-				else {
-					var name = Dictionary.ref.get(value);
-					collection[name] = value;
-				}
+
+			if (Utils.isArray(other)) {
+				definitions = {};
+				children = [];
+				other.forEach(function (item) {
+					if (item instanceof Dictionary) {
+						children.push(item);
+					}
+					else {
+						var name = Dictionary.ref.get(item);
+						definitions[name] = item;
+					}
+				});
+			}
+			else {
+				definitions = other;
+				children = [];
 			}
 
-			this._definitions = collection;
+			this._definitions = definitions;
 			this._children.reset(children);
 
 			this.raise('changed');
 
 			return this;
-		},
-
-		_getParent: function() {
-			if (!this._owner) return;
-			var parent = ObjectTree.getParent(this._owner);
-			while (parent) {
-				var dictionary = Dictionary._definitions.get(parent);
-				if (dictionary) {
-					return dictionary;
-				}
-				parent = ObjectTree.getParent(parent);
-			}
-			var globals = Dictionary.globals.get(Dictionary);
-			if (globals !== this) {
-				return globals;
-			}
 		}
 	});
 
 	Dictionary.ref = new AttachedProperty();
+
+	Dictionary.findDefinition = function(target, name) {
+		var definitions, result;
+
+		while (target) {
+			definitions = Dictionary._definitions.get(target);
+			if (definitions) {
+				result = definitions.find(name);
+				if (!Utils.isUndefined(result)) {
+					return result;
+				}
+			}
+			target = ObjectTree.getParent(target);
+		}
+		
+		definitions = Dictionary.globals.get(Dictionary);
+		if (definitions) {
+			result = definitions.find(name);
+			if (!Utils.isUndefined(result)) {
+				return result;
+			}
+		}
+
+		return undefined;
+	};
 
 	Dictionary._definitions = new AttachedProperty({
 		get: function(target) {

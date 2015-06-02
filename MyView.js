@@ -28,18 +28,16 @@ define(['xo', 'src/core/Dictionary', 'src/ui/Grid', /*'xo!MyView.xml',*/ 'src/ui
 		}
 	});
 */
-	var titleStyle = new Style({
-		fontSize: 24,
-		foreground: '#00AADE',
-		margin: '40 0 20',
-		horizontalAlignment: 'center'
-	});
-	Dictionary.ref.set(titleStyle, 'titleStyle');
 
 	var MyView = Grid({
-		definitions: [
-			titleStyle
-		],
+		definitions: {
+			titleStyle: new Style({
+				fontSize: 24,
+				foreground: '#00AADE',
+				margin: '40 0 20',
+				horizontalAlignment: 'center'
+			})
+		},
 		rowCount: 1,
 		columns: [
 			Column({ width: 200 }),

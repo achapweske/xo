@@ -223,9 +223,8 @@
 			compileDefinition: function(str) {
 				var name = str.slice(1);
 				return function () {
-					var context = helpers.getDefinitionContext(this);
-					var definitions = context.definitions();
-					var result = definitions && definitions.find(name);
+					var context = helpers.getDefinitionContext(this),
+						result = Dictionary.findDefinition(context, name);
 					if (typeof result === 'undefined') {
 						console.log('Definition not found: "' + name + '"');
 					}
