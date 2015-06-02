@@ -4,10 +4,11 @@ define(['xo', './ContentControl'], function (xo, ContentControl) {
 	 * An item with a header and content data.
 	 */
 	return ContentControl.extend({
-		construct: function HeaderedContentControl() {
-			ContentControl.call(this);
-		},
 
+		construct: function HeaderedContentControl(options) {
+			this.initialize(options);
+		},
+		
 		/**
 		 * Data representing the header portion of this control
 		 * @type {[type]}

@@ -1,7 +1,7 @@
 define(['xo', './Widget'], function (xo, Widget) {
 	return Widget.extend({
 		construct: function Control(options) {
-			Widget.call(this, options);
+			this.initialize(options);
 		},
 
 		background: xo.property({

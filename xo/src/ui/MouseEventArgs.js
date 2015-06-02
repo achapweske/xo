@@ -2,8 +2,8 @@ define(['require', 'xo', './EventArgs'], function (require, xo, EventArgs) {
 	var Visual = null;
 
 	return EventArgs.extend({
-		construct: function MouseEventArgs(e) {
-			EventArgs.call(this, e);
+		construct: function MouseEventArgs($super, e) {
+			$super(e);
 		},
 
 		leftButton: function() {

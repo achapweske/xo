@@ -1,10 +1,10 @@
 define(['xo', './ContentControl'], function (xo, ContentControl) {
-	function Label() {
-		ContentControl.call(this);
-	};
-
-	Label.prototype = Object.create(ContentControl.prototype);
-	Label.prototype.constructor = Label;
+	var Label = ContentControl.extend({
+		construct: function Label(options) {
+			this.setDefaultValue('defaultStyleKey', 'Label');
+			this.initialize(options);
+		}
+	});
 
 	return Label;
 });

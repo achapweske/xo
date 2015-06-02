@@ -17,9 +17,10 @@ define(['xo', './ItemsControl', './TabItem', './Visual'], function (xo, ItemsCon
 	 */
 	return ItemsControl.extend({
 
-		construct: function TabControl() {
-			ItemsControl.call(this);
+		construct: function TabControl(options) {
 			this.itemContainerType(TabItem);
+			this.setDefaultValue('defaultStyleKey', 'TabControl');
+			this.initialize(options);
 		},
 
 		/**
@@ -162,6 +163,10 @@ define(['xo', './ItemsControl', './TabItem', './Visual'], function (xo, ItemsCon
 				if (oldSelectedItem) this.containerFromItem(oldSelectedItem).isSelected(false);
 				this.raise('selectedItem', { newValue: newSelectedItem, oldValue: oldSelectedItem });
 			}
+		},
+
+		toString: function() {
+			return 'TabControl';
 		}
 	});
 });

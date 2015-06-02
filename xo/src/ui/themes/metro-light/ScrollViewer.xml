@@ -10,7 +10,7 @@
 	<Property name="borderWidth" value="1" />
 	<Property name="template">
 		<Template>
-			<Grid x:name="border">
+			<Grid id="border">
 				<Grid.rows>
 					<Row height="100%" />
 					<Row />
@@ -20,7 +20,7 @@
 					<Column />
 				</Grid.columns>
 				<ScrollContentPresenter 
-					x:name="parts.scrollContentPresenter" 
+					id="parts.scrollContentPresenter" 
 					canContentScroll="{control.canContentScroll}" 
 					canHorizontallyScroll="false" 
 					canVerticallyScroll="false"
@@ -28,7 +28,7 @@
 					content="{control.content}"
 					margin="{control.padding}" />
 				<ScrollBar 
-					x:name="parts.verticalScrollBar"
+					id="parts.verticalScrollBar"
 					Grid.column="1"
 					cursor="arrow" 
 					minimum="0"
@@ -36,7 +36,7 @@
 					value="{control.verticalOffset}"
 					viewportSize="{control.viewportHeight}"/>
 				<ScrollBar 
-					x:name="parts.horizontalScrollBar"
+					id="parts.horizontalScrollBar"
 					Grid.row="1"
 					orientation="horizontal"
 					cursor="arrow"

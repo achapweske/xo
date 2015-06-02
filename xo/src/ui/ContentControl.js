@@ -17,9 +17,9 @@ define(['xo', './Control', 'xo!./ContentControl.xml'], function (xo, Control, de
 	 * by the ContentPresenter.
 	 */
 	return Control.extend({
-		construct: function ContentControl() {
-			Control.call(this);
+		construct: function ContentControl(options) {
 			this.setDefaultValue('template', defaultTemplate);
+			this.initialize(options);
 		},
 
 		contentProperty: 'content',

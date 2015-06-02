@@ -1,12 +1,11 @@
 define(['xo', 'src/ui/Application', 'xo!MyApp.xml'], function (xo, Application, template) {
 
-	function MyApp() {
-		Application.call(this);
-		template.update(this);
-	};
-
-	MyApp.prototype = Object.create(Application.prototype);
-	MyApp.prototype.constructor = MyApp;
+	var MyApp = Application.extend({
+		construct: function($super) {
+			$super();
+			template.update(this);
+		}
+	});
 
 	return MyApp;
 });

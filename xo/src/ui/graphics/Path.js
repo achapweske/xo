@@ -1,6 +1,6 @@
 define(['xo', './Shape'], function (xo, Shape) {
 	function Path() {
-		Shape.call(this, createElement());
+		Shape.call(this, { element: createElement() });
 	};
 
 	function createElement() {

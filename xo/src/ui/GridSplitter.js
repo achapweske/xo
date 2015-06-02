@@ -1,6 +1,7 @@
 define(['xo', './Grid', './Thumb'], function (xo, Grid, Thumb) {
 	function GridSplitter() {
 		Thumb.call(this);
+		this.setDefaultValue('defaultStyleKey', 'GridSplitter');
 	};
 
 	GridSplitter.prototype = Object.create(Thumb.prototype);

@@ -14,9 +14,9 @@
 	<Property name="borderWidth" value="1" />
 	<Property name="template">
 		<Template>
-			<Grid x:name="border" padding="{control.padding}" background="{control.background}"  >
+			<Grid id="border" padding="{control.padding}" background="{control.background}"  >
 				<ContentPresenter 
-					x:name="content" 
+					id="content" 
 					foreground="{control.foreground}" 
 					verticalAlignment="{control.verticalContentAlignment}" 
 					horizontalAlignment="{control.horizontalContentAlignment}"
@@ -25,7 +25,7 @@
 					contentTemplateSelector="{control.contentTemplateSelector}" />
 			</Grid>
 			<StateManager.stateGroups>
-				<StateGroup x:name="state">
+				<StateGroup id="state">
 					<State name="mouseOver" value="{control.isMouseOver}">
 						<Property target="{border}" name="background" value="@listBoxItemHoverBackgroundColor" />
 						<Property target="{border}" name="borderColor" value="@listBoxItemHoverBorderColor" />

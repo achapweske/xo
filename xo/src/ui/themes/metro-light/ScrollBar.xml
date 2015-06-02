@@ -9,7 +9,7 @@
 	<Property name="minHeight" value="30" />
 	<Property name="template">
 		<Template>
-			<Grid x:name="border" rowCount="1" background="{control.background}" borderColor="{control.borderColor}" borderWidth="{control.borderWidth}" padding="{control.padding}">
+			<Grid id="border" rowCount="1" background="{control.background}" borderColor="{control.borderColor}" borderWidth="{control.borderWidth}" padding="{control.padding}">
 				<Grid.columns>
 					<Column width="30" />
 					<Column />
@@ -17,13 +17,13 @@
 				</Grid.columns>
 				<RepeatButton 
 					Grid.column="0" 
-					x:name="leftRepeatButton" 
+					id="leftRepeatButton" 
 					style="@ScrollBarButton" 
 					verticalAlignment="center" 
 					transform="rotate(-90deg)" 
 					transformOrigin="center"  />
 
-				<Track Grid.column="1" x:name="track" width="100%" value="{control.value}">
+				<Track Grid.column="1" id="track" width="100%" value="{control.value}">
 					<Track.decreaseRepeatButton>
 						<RepeatButton style="@ScrollBarPageButton" />
 					</Track.decreaseRepeatButton>
@@ -37,14 +37,14 @@
 
 				<RepeatButton 
 					Grid.column="2" 
-					x:name="rightRepeatButton" 
+					id="rightRepeatButton" 
 					style="@ScrollBarButton" 
 					verticalAlignment="center" 
 					transform="rotate(90deg)" 
 					transformOrigin="center" />
 			</Grid>
 			<StateManager.stateGroups>
-				<StateGroup x:name="state">
+				<StateGroup id="state">
 					<State name="mouseOver" value="{control.isMouseOver}">
 						<Property target="{border}" name="background" value="@textBoxHoverBackgroundColor" />
 						<Property target="{border}" name="borderColor" value="@textBoxHoverBorderColor" />

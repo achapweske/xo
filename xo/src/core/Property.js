@@ -220,6 +220,10 @@ define(['./Utils', './Event', './EventTracker', './Functor'], function(Utils, Ev
 		return callApi(property, 'set', obj, newValue, priority);
 	};
 
+	Property.assignValue = function(obj, property, newValue, priority) {
+		return callApi(property, 'assign', obj, newValue, priority);
+	};
+
 	Property.clearValue = function(obj, property, priority) {
 		return callApi(property, 'clear', obj, priority);
 	};
@@ -272,8 +276,8 @@ define(['./Utils', './Event', './EventTracker', './Functor'], function(Utils, Ev
 	};
 
 	function typeError(target, property, msg) {
-		var className = Utils.nameOf(target.constructor) || '?',
-			propertyName = '?';
+		var className = Utils.nameOf(target.constructor) || '<Unknown>',
+			propertyName = '<unknown>';
 
 		for (var key in target) {
 			if (target[key] === property) {
@@ -288,7 +292,7 @@ define(['./Utils', './Event', './EventTracker', './Functor'], function(Utils, Ev
 	function checkType(target, property, value, type) {
 		if (Utils.isFunction(type)) {
 			if (!Utils.instanceOf(value, type)) {
-				throw typeError(target, property, 'value must be of type ' + Utils.nameOf(type));
+				throw typeError(target, property, 'value must be of type ' + (Utils.nameOf(type) || '<Unknown>'));
 			}
 		}
 		else if (Utils.isArray(type)) {
@@ -322,6 +326,24 @@ define(['./Utils', './Event', './EventTracker', './Functor'], function(Utils, Ev
 		else {
 			throw new Error('property is read-only');
 		}
+	};
+
+	Property.prototype.assign = function(target, newValue, newPriority) {
+		if (this.isReadOnly()) {
+			var oldValue = Functor.call(this, 'get', target, newPriority);
+			if (oldValue && Utils.isFunction(oldValue.assign)) {
+				oldValue.assign(newValue, newPriority);
+				return;
+			}
+		}
+		var type = this.type();
+		if (type && !Utils.instanceOf(newValue, type)) {
+			var convertedValue = Property.convert(newValue, this.type());
+			if (!Utils.isUndefined(convertedValue)) {
+				newValue = convertedValue;
+			}
+		}
+		Functor.call(this, 'set', target, newValue, newPriority);
 	};
 
 	Property.prototype.clear = function(target, priority) {
@@ -386,6 +408,81 @@ define(['./Utils', './Event', './EventTracker', './Functor'], function(Utils, Ev
 		}
 	};
 
+	/**
+	 * Convert a value to the specified type
+	 * @param  {any} value The value to be converted
+	 * @param  {constructor} type  Target type
+	 * @return {any} The converted value, or undefined if unable to convert
+	 */
+	Property.convert = function(value, type) {
+		var converters = Property.converters(),
+			result;
+		if (converters) {
+			converters.forEach(function (converter) {
+				try {
+					result = converter(value, type);
+					if (!Utils.isUndefined(result)) {
+						return result;
+					}
+				}
+				catch (e) {
+					Utils.warn(e.name + ': ' + e.message);
+				}
+			});
+		}
+		return undefined;
+	};
+
+	/**
+	 * Get/set an array of type conversion functions.
+	 *
+	 * Each function should accept two arguments: 
+	 * 1) the value to be converted, and 
+	 * 2) the type to be converted to
+	 *
+	 * A conversion function should return the converted value, or undefined if unable to convert.
+	 * 
+	 * @return {Array} An array of conversion functions
+	 */
+	Property.converters = function() {
+		if (arguments.length > 0) {
+			if (!Utils.isArray(arguments[0])) {
+				throw new TypeError('converters must be an array');
+			}
+			this._converters = arguments[0];
+		}
+		return this._converters;
+	};
+
+	/**
+	 * Convert a value to a number
+	 * @param {any} value value to be converted
+	 * @param {constructor} type  target type
+	 * @return {any} converted value, or undefined if unable to convert
+	 */
+	Property.NumberConverter = function(value, type) {
+		if (type === Number) {
+			var converted = +type;
+			if (!Utils.isNaN(converted)) {
+				return converted;
+			}
+		}
+	};
+
+	/**
+	 * A generic value converter
+	 * @param {any} value value to be converted
+	 * @param {constructor} type  target type
+	 * @return {any} converted value, or undefined if unable to convert
+	 */
+	Property.DefaultConverter = function(value, type) {
+		if (Utils.isString(value) && Utils.isFunction(type.fromString)) {
+			return type.fromString(value);
+		}
+	};
+
+	Property._converters = [ Property.NumberConverter, Property.DefaultConverter ];
+
 	function callApi(property, api, target) {
 		if (typeof target === 'undefined') {
 			throw new TypeError('target is undefined');
@@ -399,7 +496,7 @@ define(['./Utils', './Event', './EventTracker', './Functor'], function(Utils, Ev
 		}
 		
 		if (!Property.isProperty(property)) {
-			throw new TypeError(property + ' is not an property');
+			throw new TypeError(property + ' is not a property');
 		}
 
 		var args = Array.prototype.slice.call(arguments, 2);

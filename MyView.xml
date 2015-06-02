@@ -17,7 +17,7 @@
 	</Grid.columns>
 	<VerticalPanel width="200" padding="30">
 		<TextBlock style="@titleStyle">Button</TextBlock>
-		<Button x:name="button" horizontalAlignment="center" click="onClicked">Button
+		<Button id="button" horizontalAlignment="center" click="onClicked">Button
 		</Button>
 		<TextBlock style="@titleStyle">Label</TextBlock>
 		<Label horizontalAlignment="center">Label</Label>
@@ -26,7 +26,7 @@
 		<TextBlock style="@titleStyle">TextBox</TextBlock>
 		<TextBox horizontalAlignment="center">TextBox</TextBox>
 		<TextBlock style="@titleStyle">ToggleButton</TextBlock>
-		<ToggleButton x:name="toggleButton" horizontalAlignment="center" click="onToggle">ToggleButton</ToggleButton>
+		<ToggleButton id="toggleButton" horizontalAlignment="center" click="onToggle">ToggleButton</ToggleButton>
 	</VerticalPanel>
 	<VerticalPanel Grid.column="1" width="200" padding="30">
 		<TextBlock style="@titleStyle">RepeatButton</TextBlock>
@@ -37,7 +37,7 @@
 				<TextBlock>This is a test 1</TextBlock>
 				<TextBlock>This is a test 2</TextBlock>
 				<TextBlock>This is a test 3</TextBlock>
-				<TextBlock x:name="label">This is a test 4</TextBlock>
+				<TextBlock id="label">This is a test 4</TextBlock>
 				<TextBlock>This is a test 5</TextBlock>
 				<TextBlock>This is a test 6</TextBlock>
 				<TextBlock>This is a test 7</TextBlock>
@@ -76,7 +76,7 @@
 	<VerticalPanel Grid.column="4" padding="20">
 		<HorizontalPanel>
 			<TextBlock text="isPressed" margin="0 10 0 0" verticalAlignment="middle" />
-			<TextBox text="{ button.isPressed }" />
+			<TextBox text="{ path: 'button.isPressed' }" />
 		</HorizontalPanel>
 		<HorizontalPanel margin="10 0 0 0">
 			<TextBlock text="isChecked" margin="0 10 0 0" verticalAlignment="middle" />
@@ -93,11 +93,11 @@
 			<Row />
 		</Grid.rows>
 		<Grid.columns>
-			<Column x:name="firstColumn" width="100" />
+			<Column id="firstColumn" width="100" />
 			<Column />
 		</Grid.columns>
-		<Block x:name="block1" Grid.row="0" Grid.column="0" background="red" foo="bar" />
-		<Button Grid.row="0" Grid.column="1" x:name="theButton" horizontalAlignment="left" verticalAlignment="center" margin="20" content="Foo bar!">
+		<Block id="block1" Grid.row="0" Grid.column="0" background="red" foo="bar" />
+		<Button Grid.row="0" Grid.column="1" id="theButton" horizontalAlignment="left" verticalAlignment="center" margin="20" content="Foo bar!">
 			<Button.background>
 				<LinearGradient>
 					<LinearGradient.colorStops>
@@ -111,7 +111,7 @@
 			</Button.transitions>
 		</Button>
 		<TextBlock Grid.row="1" Grid.column="0" background="blue" text="This is a test" />
-		<TextBox x:name="textBox" Grid.row="1" Grid.column="1" background="gray" text="{block1.background}" />
+		<TextBox id="textBox" Grid.row="1" Grid.column="1" background="gray" text="{block1.background}" />
 	</Grid>
 </View>
 -->

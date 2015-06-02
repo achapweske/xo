@@ -1,8 +1,8 @@
 define(['xo', './Dictionary', './Visual'], function (xo, Dictionary, Visual) {
 	
 	return xo.Object.extend({
-		construct: function Template() {
-
+		construct: function Template(options) {
+			this.initialize(options);
 		},
 
 		contentProperty: 'visualTree',

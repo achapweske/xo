@@ -1,8 +1,11 @@
 define(['xo', './Control', './ContentControl', './Visual'], function (xo, Control, ContentControl, Visual) {
 	var ItemsControl = Control.extend({
 
-		construct: function ItemsControl() {
-			Control.call(this);
+		construct: function ItemsControl(options) {
+			this._items = new xo.ReadOnlyObservableList();
+			this._items.on('changed', this._onItemsChanged, this);
+			this.setDefaultValue('defaultStyleKey', 'ItemsControl');
+			this.initialize(options);
 		},
 
 		contentCollection: 'items',
@@ -14,35 +17,7 @@ define(['xo', './Control', './ContentControl', './Visual'], function (xo, Contro
 		 */
 		items: xo.property({
 			changed: function(change) {
-
-				// If set to an ObservableList, listen for its 'changed' event
-				var oldItems = change.oldValue,
-					newItems = change.newValue;
-
-				if (oldItems && xo.Event.isEvent(oldItems.changed)) {
-					xo.Event.removeHandler(oldItems, 'changed', this._onItemsChanged, this);
-				}
-				if (newItems && xo.Event.isEvent(newItems.changed)) {
-					xo.Event.addHandler(newItems, 'changed', this._onItemsChanged, this);
-				}
-
-				// Update the associated itemsPanel
-				if (this._itemsPanel()) {
-					if (oldItems.toArray) {
-						oldItems = oldItems.toArray();
-					}
-					if (newItems.toArray) {
-						newItems = newItems.toArray();
-					}
-
-					this._onItemsChanged({
-						action: 'reset',
-						oldItems: oldItems,
-						oldItemsIndex: 0,
-						newItems: newItems,
-						newItemsIndex: 0
-					});
-				}
+				this._items.collection(change.newValue);
 			}
 		}),
 

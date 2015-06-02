@@ -1,16 +1,19 @@
-define(['xo', './Visual', './Dictionary', './Transform', './KeyEventArgs', './MouseEventArgs', './TouchEventArgs'], 
-	function (xo, Visual, Dictionary, Transform, KeyEventArgs, MouseEventArgs, TouchEventArgs) {
+define(['xo', './Visual', './Dictionary', './Style', './Transform', './KeyEventArgs', './MouseEventArgs', './TouchEventArgs'], 
+	function (xo, Visual, Dictionary, Style, Transform, KeyEventArgs, MouseEventArgs, TouchEventArgs) {
 	
 	var Widget = Visual.extend({
-		construct: function Widget(options) {
-			Visual.call(this, options);
-			
+		construct: function Widget($super, options) {
+			$super(xo.pick(options, 'element'));
+
 			var style = this.style();
 			if (style) {
 				style.applyTo(this);
 			}
 
 			this._setupCallbacks();
+
+			options = xo.omit(options, 'element');
+			this.initialize(options);
 		}
 	});
 
@@ -23,14 +26,23 @@ define(['xo', './Visual', './Dictionary', './Transform', './KeyEventArgs', './Mo
 	});
 
 	// Style:
+	
+	Widget.prototype.defaultStyleKey = xo.property();
+
+	Widget.prototype._defaultStyle = xo.property({
+		get: function() {
+			var defaultStyleKey = this.defaultStyleKey();
+			return defaultStyleKey && this.definitions().find(defaultStyleKey) || undefined;
+		}
+	});
 
 	Widget.prototype.style = xo.property({
+		type: Style,
 		get: function() {
-			var name = xo.nameOf(this.constructor);
-			return this._style || this.definitions().find(name);
+			return this._style || this._defaultStyle();
 		},
 		set: function(newValue) {
-			var oldValue = this._style;
+			var oldValue = this._style || this._defaultStyle();
 			if (newValue !== oldValue) {
 				this._style = newValue;
 				this.raise('style', { newValue: newValue, oldValue: oldValue });

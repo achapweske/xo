@@ -1,5 +1,5 @@
 define(['xo', './Visual'], function (xo, Visual) {
-	return xo.extend(Object, {
+	return xo.Class.extend.call(Object, {
 		construct: function EventArgs(originalEvent) {
 			this._originalEvent = originalEvent;
 		},

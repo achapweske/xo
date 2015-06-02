@@ -6,11 +6,11 @@
 	<Property name="minHeight" value="30" />
 	<Property name="template">
 		<Template>
-			<Grid x:name="border" padding="1">
-				<Widget x:name="thumb" width="100%" height="8" background="@hScrollbarThumbBackgroundColor" verticalAlignment="middle" />
+			<Grid id="border" padding="1">
+				<Widget id="thumb" width="100%" height="8" background="@hScrollbarThumbBackgroundColor" verticalAlignment="middle" />
 			</Grid>
 			<StateManager.stateGroups>
-				<StateGroup x:name="state">
+				<StateGroup id="state">
 					<State name="mouseOver" value="{control.isMouseOver}">
 						<Property target="{thumb}" name="background" value="@hScrollbarThumbHoverBackgroundColor" />
 					</State>

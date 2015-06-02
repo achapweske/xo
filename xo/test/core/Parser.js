@@ -82,7 +82,7 @@ define(['QUnit', 'src/core/Parser'], function(QUnit, Parser) {
 	});
 
 	QUnit.test('Parse a system-defined property', function (assert) {
-		var str = '<?xml version="1.0"?><Element x:name="foo"></Element>';
+		var str = '<?xml version="1.0"?><Element id="foo"></Element>';
 		var options = { modulePaths: { x: 'src/core' }};
 		var parsed = Parser.parse(str, options);
 		assert.equal(parsed.moduleName, 'Element');

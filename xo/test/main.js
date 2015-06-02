@@ -16,7 +16,7 @@ require.config({
 });
 
 require(
-	['QUnit', 'test/core/Utils', 'test/core/Property', 'test/core/Event', 'test/core/EventTracker', 'test/core/Property', 'test/core/AttachedProperty', 'test/core/RelativeProperty', 'test/core/Binding', 'test/core/Parser', 'test/xo' ],
+	['QUnit', 'test/core/Utils', 'test/core/Class', 'test/core/Property', 'test/core/Event', 'test/core/EventTracker', 'test/core/Property', 'test/core/AttachedProperty', 'test/core/RelativeProperty', 'test/core/Binding', 'test/core/Parser', 'test/xo' ],
 	function(QUnit) {
 		QUnit.load();
 		QUnit.start();

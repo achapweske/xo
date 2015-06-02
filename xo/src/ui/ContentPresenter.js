@@ -2,7 +2,7 @@ define(['xo', './Visual', './Widget', './Template'], function (xo, Visual, Widge
 	var ContentPresenter = Widget.extend({
 
 		construct: function ContentPresenter(options) {
-			Widget.call(this, options);
+			this.initialize(options);
 		},
 
 		contentProperty: 'content',
@@ -104,9 +104,13 @@ define(['xo', './Visual', './Widget', './Template'], function (xo, Visual, Widge
 	 * A light-weight visual for rendering text
 	 */
 	var TextPresenter = Visual.extend({
-		construct: function TextPresenter() {
-			Visual.call(this, document.createElement('span'));
+		construct: function TextPresenter($super, options) {
+			var element = options && options.element || document.createElement('span');
+			$super({ element: element });
 			this.dom.css('line-height', 'normal');
+
+			options = xo.omit(options, 'element');
+			this.initialize(options);
 		},
 		text: xo.property({
 			changed: function(change) {
@@ -118,7 +122,7 @@ define(['xo', './Visual', './Widget', './Template'], function (xo, Visual, Widge
 	/*
 	 * A template for rendering content as a Visual
 	 */
-	var VisualTemplate = xo.Template.extend({
+	var VisualTemplate = xo.Class.extend.call(Template, {
 		construct: function VisualTemplate() { },
 		create: function(initCallback, initContext) {
 			var templateInstance = new Template();
@@ -133,7 +137,7 @@ define(['xo', './Visual', './Widget', './Template'], function (xo, Visual, Widge
 	/*
 	 * A template for rendering content as text
 	 */
-	var DefaultTemplate = xo.Template.extend({
+	var DefaultTemplate = xo.Class.extend.call(Template, {
 		construct: function DefaultTemplate() { },
 		create: function(initCallback, initContext) {
 			var templateInstance = new Template(),

@@ -2,8 +2,10 @@ define(['xo', './Control'], function (xo, Control) {
 	
 	return Control.extend({
 
-		construct: function TextBox() {
-			Control.call(this);
+		construct: function TextBox(options) {
+
+			this.setDefaultValue('defaultStyleKey', 'TextBox');
+			
 			this._textarea = xo({
 				tagName: 'textarea',
 				attributes: { rows: 1 },
@@ -23,6 +25,8 @@ define(['xo', './Control'], function (xo, Control) {
 					'overflow': 'hidden'
 				}
 			});
+
+			this.initialize(options);
 		},
 
 		contentProperty: 'text',

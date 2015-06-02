@@ -1,29 +1,45 @@
-define(['./Utils', './Event', './Property', './RelativeProperty'], function(Utils, Event, Property, RelativeProperty) {
+define(['./Utils', './Event', './Property', './ComputedProperty', './RelativeProperty'], function(Utils, Event, Property, ComputedProperty, RelativeProperty) {
 
 	function Binding(options) {
-		if (!options || !options.source) {
-			throw new Error('You must specify a binding source');
+
+		if (Utils.isFunction(options)) {
+			options = { compute: options };
 		}
+		else if (Utils.isString(options)) {
+			options = { path: options };
+		}
+		else if (!options) {
+			options = {};
+		}
+
 		this._sourceObject = options.source;
 
-		if (options.path) {
-			this._sourceProperty = new RelativeProperty({ path: options.path });
+		if (options.compute) {
+			this._sourceProperty = new ComputedProperty(options.compute);
+			this._direction = Binding.Directions.UpdateTarget;
+		}
+		else if (options.path) {
+			this._sourceProperty = new RelativeProperty(options.path);
 		}
 		else if (options.property) {
 			this._sourceProperty = options.property;
 		}
 		else {
-			throw new Error('You must specify a binding path or property');
+			throw new Error('Unable to create binding: compute, path or property required');
 		}
 
-		var direction = options.direction || 'both';
-		direction = (''+direction).toLowerCase();
-		if (direction !== Binding.Directions.Both &&
-			direction !== Binding.Directions.UpdateTarget &&
-			direction !== Binding.Directions.UpdateSource) {
-			throw new Error('Binding: direction = ' + options.direction + ' is not valid (must be "UpdateTarget", "UpdateSource", or "Both")');
+		if (options.direction) {
+			var direction = (''+options.direction).toLowerCase();
+			if (direction !== Binding.Directions.Both &&
+				direction !== Binding.Directions.UpdateTarget &&
+				direction !== Binding.Directions.UpdateSource) {
+				throw new Error('Binding: direction = "' + options.direction + '" is not valid (must be "UpdateTarget", "UpdateSource", or "Both")');
+			}
+			this._direction = direction;
 		}
-		this._direction = direction;
+		else if (!this._direction) {
+			this._direction = Binding.Directions.Both;
+		}
 		if (options.convert) {
 			if (!Utils.isFunction(options.convert)) {
 				throw new TypeError('Binding: parameter "convert" is not valid (must be a function)');
@@ -148,6 +164,13 @@ define(['./Utils', './Event', './Property', './RelativeProperty'], function(Util
 				isUpdatingTarget = this._direction === Binding.Directions.Both || 
 								   this._direction === Binding.Directions.UpdateTarget;
 
+
+			// If no source object is specified, use the target object
+			this._originalSource = this._sourceObject;
+			if (!this._sourceObject) {
+				this._sourceObject = this._targetObject;
+			}
+
 			if (isUpdatingSource && this._trigger) {
 				var targetTrigger = this._trigger;
 				Event.addHandler(this._targetObject, targetTrigger, this._onTargetTrigger, this);
@@ -270,6 +293,9 @@ define(['./Utils', './Event', './Property', './RelativeProperty'], function(Util
 
 			this._targetObject = null;
 			this._targetProperty = null;
+
+			this._sourceObject = this._originalSource;
+			delete this._originalSource;
 
 			Binding._removeDeferred(this);
 			this._isInitialized = false;

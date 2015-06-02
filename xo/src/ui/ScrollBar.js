@@ -1,6 +1,7 @@
 define(['xo', './Control'], function (xo, Control) {
 	function ScrollBar() {
 		Control.call(this);
+		this.setDefaultValue('defaultStyleKey', 'ScrollBar');
 	}
 
 	ScrollBar.prototype = Object.create(Control.prototype);

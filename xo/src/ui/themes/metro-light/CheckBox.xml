@@ -19,7 +19,7 @@
 					<Column />
 				</Grid.columns>
 				<Grid 
-					x:name="box" 
+					id="box" 
 					width="18" 
 					height="18" 
 					horizontalAlignment="center"
@@ -28,7 +28,7 @@
 					borderColor="@checkBoxBorderColor" 
 					borderWidth="1">
 					<Path 
-						x:name="check" 
+						id="check" 
 						width="12" 
 						height="10" 
 						horizontalAlignment="center"
@@ -47,7 +47,7 @@
 					contentTemplateSelector="{control.contentTemplateSelector}" />
 			</Grid>
 			<StateManager.stateGroups>
-				<StateGroup x:name="state">
+				<StateGroup id="state">
 					<State name="mouseOver" value="{control.isMouseOver}">
 						<Property target="{box}" name="background" value="@checkBoxHoverBackgroundColor" />
 						<Property target="{box}" name="borderColor" value="@checkBoxHoverBorderColor" />
@@ -57,7 +57,7 @@
 						<Property target="{box}" name="borderColor" value="@checkBoxPressedBorderColor" />
 					</State>
 				</StateGroup>
-				<StateGroup x:name="checkedState">
+				<StateGroup id="checkedState">
 					<State name="checked" value="{control.isChecked}">
 						<Property target="{check}" name="fill" value="@checkBoxCheckBackgroundColor" />
 					</State>

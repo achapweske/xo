@@ -17,6 +17,13 @@ define([], function() {
 		return false;
 	};
 
+	function argumentNames(fn) {
+    	var names = fn.toString().match(/^[\s\(]*function[^(]*\(([^)]*)\)/)[1]
+      		.replace(/\/\/.*?[\r\n]|\/\*(?:.|[\r\n])*?\*\//g, '')
+      		.replace(/\s+/g, '').split(',');
+    	return names.length == 1 && !names[0] ? [] : names;
+	}
+
 	function capitalize(str){
 		str = str == null ? '' : String(str);
 		return str.charAt(0).toUpperCase() + str.slice(1);
@@ -43,35 +50,14 @@ define([], function() {
 		return false;
 	};
 
-	var builtInKeys = [
-		'constructor',
-		'toString',
-		'valueOf',
-		'toLocaleString',
-		'prototype',
-		'isPrototypeOf',
-		'propertyIsEnumerable',
-		'hasOwnProperty',
-		'length',
-		'unique'
-	];
-
 	function copy(obj) {
 		var source, key, i, j;
 		for (i = 1; i < arguments.length; i++) {
 			source = arguments[i];
 			if (source) {
-				for (key in source) {
-					if (source.hasOwnProperty(key)) {
-						obj[key] = source[key];
-					}
-				}
-				// IE<9: properties with same name as inherited properties aren't enumerated by 'in' operator ("DontEnum" bug)
-				for (j = 0; j < builtInKeys.length; j++) {
-					key = builtInKeys[j];
-					if (source.hasOwnProperty(key)) {
-						obj[key] = source[key];
-					}
+				var props = keys(source);
+				for (var j = 0; j < props.length; j++) {
+					obj[props[j]] = source[props[j]];
 				}
 			}
 		}
@@ -90,42 +76,6 @@ define([], function() {
 		if (window.console) {
 			console.error.apply(console, arguments);
 		}
-	};
-
-    function _extend(subClass) {
-    	var baseClass = this;
-
-		if (!isFunction(baseClass)) {
-			throw new TypeError('baseClass must be a function');
-		}    	
-    	if (subClass && !isObject(subClass)) {
-    		throw new TypeError('subClass must be an object');
-    	}
-
-    	var ctor = subClass && subClass.construct;
-    	if (!ctor) {
-    		ctor = function() {
-				baseClass.apply(this, arguments);
-			};
-		}
-
-    	var fn = function() { };
-    	fn.prototype = baseClass.prototype;
-    	ctor.prototype = new fn();
-		ctor.prototype.constructor = ctor;
-		ctor.extend = _extend;
-		ctor.mixin = _mixin;
-
-		if (subClass) {
-			copy(ctor.prototype, subClass);
-		}
-
-		return ctor;
-    };
-
-    function extend(baseClass, subClass) {
-    	var args = Array.prototype.slice.call(arguments, 1);
-    	return _extend.apply(baseClass, args);
 	};
 
 	function hasValue(obj, value) {
@@ -248,6 +198,29 @@ define([], function() {
 		return obj === void 0;
 	};
 
+	var hasOwnProperty = Object.prototype.hasOwnProperty;
+	
+	// IE<9: properties with same name as inherited properties aren't enumerated by 'in' operator ("DontEnum" bug)
+    var hasDontEnumBug = !({ toString: null }).propertyIsEnumerable('toString'),
+        dontEnums = [ 'constructor', 'toString', 'valueOf', 'toLocaleString', 'prototype', 'isPrototypeOf', 'propertyIsEnumerable', 'hasOwnProperty', 'length', 'unique' ];
+
+	var keys = Object.keys || function(obj) {
+		var keys = [];
+		for (var key in obj) {
+			if (hasOwnProperty.call(obj, key)) {
+				keys.push(key);
+			}
+		}
+		if (hasDontEnumBug) {
+			for (var i = 0; i < dontEnums.length; i++) {
+				if (hasOwnProperty.call(obj, dontEnums[i])) {
+					keys.push(dontEnums[i]);
+				}
+			}
+		}
+		return keys;
+	};
+
 	function log() {
 		if (window.console) {
 			console.log.apply(console, arguments);
@@ -263,21 +236,6 @@ define([], function() {
 		return results;
 	};
 
-	function _mixin() {
-		var baseClass = this;
-		for (var i = 0; i < arguments.length; i++) {
-			var mixinClass = arguments[i];
-			if (isFunction(mixinClass)) mixinClass = mixinClass.prototype;
-			copy(baseClass.prototype, mixinClass);
-		}
-		return baseClass;
-	};
-
-	function mixin(baseClass, mixinClass) {
-		var args = Array.prototype.slice.call(arguments, 1);
-    	return _mixin.apply(baseClass, args);
-	};
-
 	/**
 	 * Get the name of the given function
 	 * @param  {Function} fn
@@ -287,15 +245,38 @@ define([], function() {
 		if (!isFunction(fn)) {
 			throw new TypeError('name(): first parameter must be a function');
 		}
-		else if (fn.name) {
+		else if ('name' in fn) {
 			return fn.name;
 		}
 		else {
-			return fn.toString().match(/^function\s(.+)\(/)[1];
+			var match = fn.toString().match(/^function\s(.+)\(/);
+			return match ? match[1] : '';
 		}
 	};
 
+	function omit(obj) {
+		if (obj == null) return {};
+		var result = clone(obj);
+		for (var i = 1; i < arguments.length; i++) {
+			var key = arguments[i];
+			if (key in result) delete result[key];
+		}
+		return result;
+	};
+
+	function pairs(obj) {
+		var names = keys(obj),
+    		length = names.length,
+    		results = Array(length);
+		for (var i = 0; i < length; i++) {
+			var name = names[i];
+			results[i] = [ name, obj[name] ];
+		}
+		return results;
+	};
+
 	function pick(obj) {
+		if (obj == null) return {};
 		var result = {};
 		for (var i = 1; i < arguments.length; i++) {
 			var key = arguments[i];
@@ -320,13 +301,13 @@ define([], function() {
 
 	return {
 		any: any,
+		argumentNames: argumentNames,
 		capitalize: capitalize,
 		clone: clone,
 		contains: contains,
 		copy: copy,
 		endsWith: endsWith,
 		error: error,
-		extend: extend,
 		hasValue: hasValue,
 		id: id,
 		instanceOf: instanceOf,
@@ -345,10 +326,12 @@ define([], function() {
 		isRegExp: isRegExp,
 		isString: isString,
 		isUndefined: isUndefined,
+		keys: keys,
 		log: log,
 		map: map,
-		mixin: mixin,
 		nameOf: nameOf,
+		omit: omit,
+		pairs: pairs,
 		pick: pick,
 		startsWith: startsWith,
 		warn: warn

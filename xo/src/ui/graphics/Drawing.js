@@ -1,6 +1,6 @@
 define(['xo', 'src/ui/Panel'], function (xo, Panel) {
 	function Drawing() {
-		Panel.call(this, createSVGElement());
+		Panel.call(this, { element: createSVGElement() });
 	};
 
 	function createSVGElement() {

@@ -10,7 +10,7 @@
 	<Property name="minHeight" value="30" />
 	<Property name="template">
 		<Template>
-			<Grid x:name="border" rowCount="1" columnCount="1" background="@buttonBackgroundColor" borderColor="@buttonBorderColor" borderWidth="1" borderRadius="2">
+			<Grid id="border" rowCount="1" columnCount="1" background="@buttonBackgroundColor" borderColor="@buttonBorderColor" borderWidth="1" borderRadius="2">
 				<ContentPresenter 
 					margin="{control.padding}" 
 					horizontalAlignment="{control.horizontalContentAlignment}" 
@@ -20,7 +20,7 @@
 					contentTemplateSelector="{control.contentTemplateSelector}" />
 			</Grid>
 			<StateManager.stateGroups>
-				<StateGroup x:name="state">
+				<StateGroup id="state">
 					<State name="mouseOver" value="{control.isMouseOver}">
 						<Property target="{border}" name="background" value="@buttonHoverBackgroundColor" />
 						<Property target="{border}" name="borderColor" value="@buttonHoverBorderColor" />

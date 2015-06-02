@@ -1,10 +1,14 @@
-define(['./Utils', './Property'], function(Utils, Property) {
+define(['./Utils', './Property', './ObjectTree'], function(Utils, Property, ObjectTree) {
 
 	function RelativeProperty(options) {
 		Property.call(this, {
 			get: RelativeProperty._getRelativeValue,
 			set: RelativeProperty._setRelativeValue
 		});
+
+		if (Utils.isString(options) || Utils.isArray(options)) {
+			options = { path: options };
+		}
 
 		if (!options || !options.path || !options.path.length) {
 			throw new Error('missing parameter "path"');
@@ -19,10 +23,6 @@ define(['./Utils', './Property'], function(Utils, Property) {
 		else {
 			throw options.path + ' is not a string or array';
 		}
-
-		while (this._path[0] === 'this') {
-			this._path.splice(0, 1);
-		}
 	};
 
 	RelativeProperty.prototype = new Property;// Object.create(Property.prototype);
@@ -30,6 +30,9 @@ define(['./Utils', './Property'], function(Utils, Property) {
 
 	RelativeProperty._getRelativeValue = function(property, target) {
 		var path = property._path;
+		if (path[0] !== 'this') {
+			target = ObjectTree.getNameScope(target) || target;
+		}
 		for (var i = 0; i < path.length; i++) {
 			if (!target) {
 				Utils.warn('Data binding error: property "' + path[i-1] + '" not found');
@@ -42,6 +45,9 @@ define(['./Utils', './Property'], function(Utils, Property) {
 
 	RelativeProperty._setRelativeValue = function(newValue, property, target) {
 		var path = property._path;
+		if (path[0] !== 'this') {
+			target = ObjectTree.getNameScope(target) || target;
+		}
 		for (var i = 0; i < path.length-1; i++) {
 			if (!target) {
 				Utils.warn('Data binding error: property "' + path[i-1] + '" not found');
@@ -53,6 +59,9 @@ define(['./Utils', './Property'], function(Utils, Property) {
 	};
 
 	RelativeProperty._getValue = function(obj, property, priority) {
+		if (property === 'this') {
+			return obj;
+		}
 		if (Property.isProperty(property)) {
 			return Property.getValue(obj, property, priority);
 		}

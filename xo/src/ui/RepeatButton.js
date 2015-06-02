@@ -1,6 +1,7 @@
 define(['xo', './Button'], function (xo, Button) {
 	function RepeatButton() {
 		Button.call(this);
+		this.setDefaultValue('defaultStyleKey', 'RepeatButton');
 	};
 
 	RepeatButton.prototype = Object.create(Button.prototype);

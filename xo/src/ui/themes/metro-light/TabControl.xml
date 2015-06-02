@@ -9,12 +9,12 @@
 	<Property name="padding" value="5" />
 	<Property name="template">
 		<Template>
-			<Grid x:name="border">
+			<Grid id="border">
 				<Grid.rows>
 					<Row height="30" />
 					<Row />
 				</Grid.rows>
-				<HorizontalPanel x:name="itemsPanel" />
+				<HorizontalPanel id="itemsPanel" />
 				<ContentPresenter 
 					Grid.row="1" 
 					width="100%" 

@@ -11,7 +11,7 @@ define(['xo', './PropertyPriorities'], function (xo, PropertyPriorities) {
 			var target = this.target();
 			if (target) {
 				var test = this._condition.test();
-				return test(target);
+				return xo.ComputedProperty.eval(test, target, target);
 			}
 		},
 		changed: function(change) {
@@ -25,24 +25,27 @@ define(['xo', './PropertyPriorities'], function (xo, PropertyPriorities) {
 	});
 
 	ConditionInstance.prototype.onTrue = function() {
-		var properties = this._condition._properties,
+		var properties = this._condition.properties(),
 			target = this.target();
-		properties.forEach(function(property) {
-			property.applyTo(target, PropertyPriorities.Condition);
-		});
+		if (properties) {
+			properties.forEach(function(property) {
+				property.applyTo(target, PropertyPriorities.Condition);
+			});
+		}
 	};
 
 	ConditionInstance.prototype.onFalse = function() {
-		var properties = this._condition._properties,
+		var properties = this._condition.properties(),
 			target = this.target();
-		properties.forEach(function(property) {
-			property.clear(target, PropertyPriorities.Condition);
-		});
+		if (properties) {
+			properties.forEach(function(property) {
+				property.clear(target, PropertyPriorities.Condition);
+			});
+		}
 	};
 
 	function Condition() {
 		this._instances = {};
-		this._properties = new xo.ObservableList();
 	};
 
 	Condition.prototype.contentCollection = 'properties';
@@ -52,10 +55,8 @@ define(['xo', './PropertyPriorities'], function (xo, PropertyPriorities) {
 	});
 
 	Condition.prototype.properties = xo.property({
-		get: function() {
-			return this._properties;
-		}
-	})
+		type: Array
+	});
 
 	Condition.prototype.applyTo = function(target) {
 		var id = xo.Utils.id(this, target),

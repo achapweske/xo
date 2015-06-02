@@ -8,7 +8,7 @@ define(['xo'], function (xo) {
 			if (!target._stateGroups) {
 				target._stateGroups = new xo.ObservableList({
 					changed: onStateGroupsChanged,
-					context: target
+					$context: target
 				});
 			}
 			return target._stateGroups;

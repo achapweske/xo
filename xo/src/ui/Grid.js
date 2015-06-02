@@ -1,19 +1,17 @@
 define(['xo', './Panel', './Row', './Column', './AnimationTimer'], function (xo, Panel, Row, Column, AnimationTimer) {
 	var Grid = Panel.extend({
 
-		construct: function Grid() {
-			Panel.call(this);
-
+		construct: function Grid(options) {
 			this._createGridTable();
 
 			this._rows = new xo.ObservableList({
-				context: this,
-				changed: this._onRowsChanged
+				changed: this._onRowsChanged,
+				$context: this
 			});
 
 			this._columns = new xo.ObservableList({
-				context: this,
-				changed: this._onColumnsChanged
+				changed: this._onColumnsChanged,
+				$context: this
 			});
 
 			this.on('width', this._onGridWidthChanged);
@@ -22,6 +20,8 @@ define(['xo', './Panel', './Row', './Column', './AnimationTimer'], function (xo,
 
 			this.setDefaultValue('width', '100%');
 			this.setDefaultValue('height', '100%');
+			
+			this.initialize(options);
 		},
 
 		_createGridTable: function() {
@@ -124,7 +124,8 @@ define(['xo', './Panel', './Row', './Column', './AnimationTimer'], function (xo,
 		},
 
 		onVisualChildAdded: function(newChild) {
-			// Do nothing
+			// Prevent the base class from inserting the child into the DOM at this point
+			// since we defer this to onRender()
 		},
 
 		onRender: function() {

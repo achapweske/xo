@@ -9,10 +9,11 @@ define(['xo', './ItemsControl', './ListBoxItem'], function (xo, ItemsControl, Li
 
 	var ListBox = ItemsControl.extend({
 
-		construct: function ListBox() {
-			ItemsControl.call(this);
+		construct: function(options) {
+			this.setDefaultValue('defaultStyleKey', 'ListBox');
 			this.itemContainerType(ListBoxItem);
 			this._selectedItems = new xo.ObservableList();
+			this.initialize(options);
 		},
 
 		selectionMode: xo.property({

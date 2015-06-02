@@ -1,52 +1,34 @@
-define(['./Utils', './Object', './EventTracker', './Binding'], function(Utils, Object, EventTracker, Binding) {
+define(['require', './Utils', './ObjectTree', './EventTracker', './Binding'], function(require, Utils, ObjectTree, EventTracker, Binding) {
 
-	var Template = Object.extend({
-		construct: function Template(recipe, options) {
-			this.recipe = recipe;
-			this.options = options;
-		},
-
-		instance: function() {
-			return this._instance || (this._instance = this.create());
-		},
-
-		create: function(initCallback, initContext) {
-			return EventTracker.ignore(function() {	
-				return Binding.deferBindings(function() {
-					var parent = ObjectTreeHelper.getParent(this);
-					var result = Template.invoke(this.recipe, this.options, null, parent);
-					if (initCallback) initCallback.call(initContext, result);
-					return result;
-				}, this);
-			}, this);
-		},
-
-		update: function(obj) {
-			return EventTracker.ignore(function() {	
-				return Binding.deferBindings(function() {
-					var parent = ObjectTreeHelper.getParent(this);
-					return Template.invoke(this.recipe, this.options, obj, parent);
-				}, this);
-			}, this);
-		}
-	});
-
-	var ObjectTreeHelper = {
-		getRoot: function(obj) {
-			// TODO
-		},
-		getParent: function(obj) {
-			return obj._xoparent;
-		},
-		addChild: function(obj, child) {
-			child._xoparent = obj;
-		},
-		getChildren: function(obj) {
-			// TODO
-		}
+	function Template(recipe, options) {
+		this.recipe = recipe;
+		this.options = options;
 	};
 
-	Template.ObjectTreeHelper = ObjectTreeHelper;
+	Template.prototype.instance = function() {
+		return this._instance || (this._instance = this.create());
+	};
+
+	Template.prototype.create = function(initCallback, initContext) {
+		return EventTracker.ignore(function() {	
+			return Binding.deferBindings(function() {
+				var parent = ObjectTree.getParent(this);
+				var result = Template.invoke(this.recipe, this.options, null, parent);
+				if (initCallback) initCallback.call(initContext, result);
+				return result;
+			}, this);
+		}, this);
+	};
+
+	Template.prototype.update = function(obj) {
+		return EventTracker.ignore(function() {	
+			return Binding.deferBindings(function() {
+				var parent = ObjectTree.getParent(this);
+				return Template.invoke(this.recipe, this.options, obj, parent);
+			}, this);
+		}, this);
+	};
+
 
 	Template.invoke = function(recipe, options, target, parent, root) {
 
@@ -83,8 +65,11 @@ define(['./Utils', './Object', './EventTracker', './Binding'], function(Utils, O
 			}
 		}
 
-		root = root || target;
-		ObjectTreeHelper.addChild(parent, target);
+		if (!root) {
+			root = target;
+			ObjectTree.setIsNameScope(root, true);
+		}
+		if (parent) ObjectTree.addChild(parent, target);
 		
 		if (recipe.properties) {
 			recipe.properties.forEach(function (item) {
@@ -107,7 +92,7 @@ define(['./Utils', './Object', './EventTracker', './Binding'], function(Utils, O
 
 	function createTemplate(recipe, options, parent, root) {
 		var result = new Template(recipe, options);
-		ObjectTreeHelper.addChild(parent, result);
+		ObjectTree.addChild(parent, result);
 		return result;
 	};
 
@@ -207,9 +192,20 @@ define(['./Utils', './Object', './EventTracker', './Binding'], function(Utils, O
 		return items.map(function (item) {
 			return Template.invoke(item, options, null, parent, root);
 		});
-	}
+	};
 
-
+	Template.initialize = function(obj, template) {
+		if (Utils.isString(template)) {
+			if (template.slice(0, 3) !== 'xo!') {
+				template = 'xo!' + template;
+			}
+			template = require(template);
+		}
+		if (!(template instanceof Template)) {
+			throw new TypeError('template');
+		}
+		template.update(obj);
+	};
 
 	return Template;
 });

@@ -17,7 +17,7 @@
 	<Property name="template">
 		<Template>
 			<Grid 
-				x:name="border" 
+				id="border" 
 				padding="{control.padding}"
 				background="{control.background}" 
 				borderColor="{control.borderColor}" 
@@ -31,7 +31,7 @@
 					contentTemplateSelector="{control.contentTemplateSelector}" />
 			</Grid>
 			<StateManager.stateGroups>
-				<StateGroup x:name="state">
+				<StateGroup id="state">
 					<State name="mouseOver" value="{control.isMouseOver}">
 						<Property target="{border}" name="background" value="@buttonHoverBackgroundColor" />
 						<Property target="{border}" name="borderColor" value="@buttonHoverBorderColor" />

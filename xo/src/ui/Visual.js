@@ -5,7 +5,9 @@ define(['xo', './Transform', './TransformOrigin'], function (xo, Transform, Tran
 // Constructor
 
 		construct: function Visual(options) {
-			this.dom = createDOM(options, {
+			options = options || {};
+
+			this.dom = createDOM(options.element, {
 				attributes: {
 					'data-type': this.toString()
 				},
@@ -22,8 +24,11 @@ define(['xo', './Transform', './TransformOrigin'], function (xo, Transform, Tran
 
 			this._visualChildren = new xo.ObservableList({
 				changed: this._onVisualChildrenChanged,
-				context: this
+				$context: this
 			});
+
+			options = xo.omit(options, 'element');
+			this.initialize(options);
 		},
 		
 // Visual Tree
@@ -292,10 +297,6 @@ define(['xo', './Transform', './TransformOrigin'], function (xo, Transform, Tran
 		 */
 		onRender: function() {
 
-		},
-
-		toString: function() {
-			return xo.nameOf(this.constructor);
 		}
 		 
 	});

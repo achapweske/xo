@@ -1,8 +1,7 @@
 define(['xo', './Panel'], function (xo, Panel) {
 	return Panel.extend({
 
-		construct: function HorizontalPanel() {
-			Panel.call(this);
+		construct: function HorizontalPanel(options) {
 
 			var table = xo({
 				tagName: 'table',
@@ -19,6 +18,8 @@ define(['xo', './Panel'], function (xo, Panel) {
 			
 			this._cells = xo('tr');
 			tbody.append(this._cells);
+
+			this.initialize(options);
 		},
 
 		onVisualChildAdded: function(newChild, index) {

@@ -8,7 +8,7 @@
 	<Property name="template">
 		<Template>
 			<Grid rowCount="1" columnCount="1" background="transparent" padding="{control.padding}">
-				<Path x:name="arrow"
+				<Path id="arrow"
 					width="10"
 					height="6"
 					horizontalAlignment="{control.horizontalContentAlignment}" 
@@ -18,7 +18,7 @@
 					viewBox="531.107 167.49 10.530 6.09" />
 			</Grid>
 			<StateManager.stateGroups>
-				<StateGroup x:name="state">
+				<StateGroup id="state">
 					<State name="mouseOver" value="{control.isMouseOver}">
 						<Property target="{arrow}" name="fill" value="@scrollbarPageButtonArrowHoverBackgroundColor" />
 					</State>

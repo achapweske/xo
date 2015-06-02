@@ -1,7 +1,8 @@
 define(['xo', './Button'], function (xo, Button) {
 	return Button.extend({
-		construct: function ToggleButton() {
-			Button.call(this);
+		construct: function(options) {
+			this.setDefaultValue('defaultStyleKey', 'ToggleButton');
+			this.initialize(options);
 		},
 
 		isChecked: xo.property(),

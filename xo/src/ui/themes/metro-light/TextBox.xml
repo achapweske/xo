@@ -12,11 +12,11 @@
 	<Property name="minHeight" value="20" />
 	<Property name="template">
 		<Template>
-			<Grid x:name="border" background="{control.background}" borderColor="{control.borderColor}" borderWidth="{control.borderWidth}" padding="{control.padding}">
-				<Widget x:name="part.contentHost" height="100%" />
+			<Grid id="border" background="{control.background}" borderColor="{control.borderColor}" borderWidth="{control.borderWidth}" padding="{control.padding}">
+				<Widget id="part.contentHost" height="100%" />
 			</Grid>
 			<StateManager.stateGroups>
-				<StateGroup x:name="state">
+				<StateGroup id="state">
 					<State name="mouseOver" value="{control.isMouseOver}">
 						<Property target="{border}" name="background" value="@textBoxHoverBackgroundColor" />
 						<Property target="{border}" name="borderColor" value="@textBoxHoverBorderColor" />

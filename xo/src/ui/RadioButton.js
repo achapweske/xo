@@ -1,6 +1,7 @@
 define(['xo', './ToggleButton'], function (xo, ToggleButton) {
 	function RadioButton() {
 		ToggleButton.call(this);
+		this.setDefaultValue('defaultStyleKey', 'RadioButton');
 		xo.Event.addHandler(this, 'isChecked', this._onIsCheckedChanged, this);
 	};
 

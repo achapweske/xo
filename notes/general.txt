@@ -1,0 +1,156 @@
+Here's what we have currently:
+
+{
+	moduleName: ...,
+	modulePath: ...,
+	module: ListBox,
+	properties: [
+	],
+	children: [
+	]
+}
+
+Special considerations:
+
+-Attached properties
+-Bindings
+-Namespaces
+-Converters
+
+Three ways to specify a recipe:
+
+1) XML
+
+<Application title="{data.name}" xmlns:g="./graphics">
+    <Application.view>
+    	<ListBox Grid.row="1">
+    		<ListBoxItem>Test</ListBoxItem>
+    		<g:Line x1="0" y1="0" x2="100" y2="100"/>
+    	</ListBox>    	
+    <Application.view>
+</Application>
+
+2) JSON
+
+{
+	"class": "Application",
+	"namespaces": { "g": "./graphics" }
+	"title": "{data.name}",
+	"view": {
+		"class": "ListBox",
+		"init": "Grid.row.set(this,1)",
+		"items": [
+			{
+				"class": "ListBoxItem",
+				"content": "Test"
+			},
+			{
+				"class": "g:Line",
+				"x1": 0,
+				"y1": 0,
+				"x2": 100,
+				"y2": 100
+			}
+		]
+	}
+}
+
+3) Javascript
+
+Application({
+	title: "{data.name}",
+	view: ListBox({
+		init: function() {
+			Grid.row.set(this, 1);
+		},
+		items: [
+			ListBoxItem({ 
+				content: 'Test'
+			}),
+			g.Line({
+				name: 'myLine',
+				x1: 0,
+				y1: 0,
+				x2: 100,
+				y2: 100,
+				click: 'onClick'
+			})
+		]
+	})
+});
+
+These all compile to:
+
+this.extend({
+	construct: function() {
+		options.init.call(this);
+		Utils.pairs(options).forEach(function (pair) {
+			if (isConstructor(pair[1])) {
+				pair[1] = new pair[1]();
+			}
+			this[pair[0]](pair[1]);
+		});
+	}
+})
+
+{
+	class: Application,
+	title: "{data.name}",
+	view: {
+		class: ListBox,
+		init: function () {
+			Grid.row.set(this,1);
+		},
+		items: [
+			{
+				class: ListBoxItem,
+				content: "Test"
+			},
+			{
+				class: g.Line,
+				x1: 0,
+				y1: 0,
+				x2: 100,
+				y2: 100
+			}
+		]
+	}
+}
+
+Or don't use recipe and instantiate directly:
+
+new Application({
+	title: 'Hello World',
+	view: new ListBoxItem({
+		init: function() {
+			Grid.row.set(this, 1);
+		},
+		items: [
+			new ListBoxItem({
+				content: Binding('bar.test')
+			}),
+			new g.Line({
+				x1: 0,
+				y1: 0,
+				x2: 100,
+				y2: 100
+			})
+		]
+	})
+})
+
+Constructor also needs to accept template or template name
+
+new Application(template);
+new Application("MyApp.xml");
+
+
+
+Requirements:
+1) Names
+2) Bindings need to be applied after all other initialization
+-If binding source is a string, resolve to root property
+-If binding source is not specified, resolve to target
+-Binding() should accept a string argument with same syntax as defined in xml 
+
+

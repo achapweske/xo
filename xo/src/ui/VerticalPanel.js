@@ -1,9 +1,5 @@
 define(['xo', './Panel'], function (xo, Panel) {
 	return Panel.extend({
-		construct: function VerticalPanel() {
-			Panel.call(this);
-		},
-
 		onVisualChildAdded: function(newChild, index) {
 			var container = xo('div');
 			container.append(newChild.dom);

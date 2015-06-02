@@ -1,17 +1,11 @@
 define(['xo', './Widget', 'src/core/ObservableList'], function (xo, Widget, ObservableList) {
 	return Widget.extend({
-		/**
-		 * Constructor
-		 * @param  {[type]} options
-		 * @return {[type]}
-		 */
-		construct: function Panel(options) {
-			Widget.call(this, options);
-			
-			this._children = new ObservableList({
-				changed: this._onChildrenChanged,
-				context: this
-			});
+		construct: function Panel($super, options) {
+			$super(xo.pick(options, 'element'));
+			this._children = new ObservableList();
+			this._children.on('changed', this._onChildrenChanged, this);
+			options = xo.omit(options, 'element');
+			this.initialize(options);
 		},
 
 		contentCollection: 'children',

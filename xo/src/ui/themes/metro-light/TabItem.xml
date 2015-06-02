@@ -15,9 +15,9 @@
 	<Property name="verticalContentAlignment" value="middle" />
 	<Property name="template">
 		<Template>
-			<Grid x:name="border" padding="{control.padding}" background="{control.background}" borderColor="{control.borderColor}" borderWidth="{control.borderWidth}"  >
+			<Grid id="border" padding="{control.padding}" background="{control.background}" borderColor="{control.borderColor}" borderWidth="{control.borderWidth}"  >
 				<ContentPresenter 
-					x:name="content" 
+					id="content" 
 					foreground="@tabItemTexForegroundColor" 
 					verticalAlignment="{control.verticalContentAlignment}" 
 					horizontalAlignment="{control.horizontalContentAlignment}"
@@ -26,7 +26,7 @@
 					contentTemplateSelector="{control.headerTemplateSelector}" />
 			</Grid>
 			<StateManager.stateGroups>
-				<StateGroup x:name="state">
+				<StateGroup id="state">
 					<State name="mouseOver" value="{control.isMouseOver}">
 						<Property target="{content}" name="foreground" value="@lightForegroundColor" />
 					</State>

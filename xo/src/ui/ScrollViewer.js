@@ -2,16 +2,18 @@ define(['xo', './ContentControl'], function (xo, ContentControl) {
 
 	return ContentControl.extend({
 
-		construct: function ScrollViewer() {
-			ContentControl.call(this);
+		construct: function ScrollViewer(options) {
 
 			// IE7: if descendant has position:overflow, soo too must this element if overflow is to work properly
 			this.dom.css('position', 'relative');
 
+			this.setDefaultValue('defaultStyleKey', 'ScrollViewer');
 			this.setDefaultValue('horizontalScrollBarVisibility', 'auto');
 			this.setDefaultValue('verticalScrollBarVisibility', 'auto');
 			this.setDefaultValue('width', '100%');
 			this.setDefaultValue('height', '100%');
+
+			this.initialize(options);
 		},
 
 		extentHeight: xo.property({

@@ -11,7 +11,7 @@
 		<Template>
 			<ContentPresenter background="{control.background}" borderColor="{control.borderColor}" borderWidth="{control.borderWidth}" width="100%" height="100%">
 				<ScrollViewer padding="{control.padding}" width="100%">
-					<VerticalPanel x:name="itemsPanel" width="100%" />
+					<VerticalPanel id="itemsPanel" width="100%" />
 				</ScrollViewer>		
 			</ContentPresenter>
 		</Template>
